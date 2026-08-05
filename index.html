@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MR.R1N — NSFW 2D Animator & Artist</title>
+  <title>MR.R1N — NSFW 2D Artist & Animator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0c0808;
-      --bg-elevated: #140e0e;
-      --surface: #1a1414;
-      --surface-hover: #241c1c;
-      --border: #3d2828;
-      --border-hover: #5a3a3a;
-      --accent: #bf5a3f;
-      --accent-light: #e88d67;
-      --gold: #d4a373;
-      --text: #f0e6e0;
-      --text-muted: #8a7a72;
-      --radius: 2px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg: #1a0f0f;
+      --bg-dark: #140a0a;
+      --surface: #241818;
+      --surface-hover: #2e1e1e;
+      --border: #4a2e2e;
+      --border-light: #5a3a3a;
+      --accent: #c9a227;
+      --accent-dim: #a08020;
+      --danger: #8b2e2e;
+      --text: #e8ddd5;
+      --text-muted: #8a7268;
+      --transition: 0.2s ease;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,984 +28,723 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
       line-height: 1.6;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Subtle noise overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-    }
+    ::selection { background: var(--accent); color: #000; }
 
-    ::selection { background: var(--accent); color: #fff; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-    /* Age Gate */
+    /* AGE GATE */
     #age-gate {
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(12, 8, 8, 0.96);
-      backdrop-filter: blur(30px) saturate(140%);
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 1;
-      transition: opacity 0.7s ease, visibility 0.7s;
-    }
-
-    #age-gate.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .age-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 3rem 2.5rem;
-      max-width: 480px;
-      width: 90%;
       text-align: center;
-      position: relative;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(191, 90, 63, 0.08);
-      animation: fadeScale 0.6s ease-out;
+      transition: opacity 0.4s, visibility 0.4s;
     }
+    #age-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    .age-card::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: -1px; right: -1px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
-      background-size: 200% 100%;
-      animation: shimmer 3s infinite;
+    .age-box h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
     }
-
-    @keyframes shimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes fadeScale {
-      from { opacity: 0; transform: scale(0.95) translateY(20px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .age-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.8;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.05); opacity: 1; }
-    }
-
-    .age-card h2 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-      color: var(--text);
-    }
-
-    .age-card p {
+    .age-box p {
       color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      line-height: 1.7;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2.5rem;
     }
-
-    .age-buttons {
+    .age-btns {
       display: flex;
       gap: 1rem;
       justify-content: center;
-      flex-wrap: wrap;
     }
-
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.875rem 2rem;
-      font-family: inherit;
-      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
+      padding: 0.9rem 2.2rem;
       border: 1px solid var(--border);
-      background: var(--bg-elevated);
-      color: var(--text);
+      background: transparent;
+      color: var(--text-muted);
       cursor: pointer;
       transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
     }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-
-    .btn:hover::before { transform: translateX(100%); }
-
     .btn:hover {
       border-color: var(--accent);
-      color: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(191, 90, 63, 0.15);
+      color: var(--accent);
     }
-
-    .btn-primary {
+    .btn-solid {
       background: var(--accent);
       border-color: var(--accent);
-      color: #fff;
+      color: #000;
+    }
+    .btn-solid:hover {
+      background: var(--text);
+      border-color: var(--text);
+      color: #000;
     }
 
-    .btn-primary:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-light);
-      color: #fff;
-      box-shadow: 0 0 32px rgba(191, 90, 63, 0.35);
-    }
-
-    .btn-deny:hover {
-      border-color: #8b3a3a;
-      color: #c97b7b;
-    }
-
-    /* Navigation */
+    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(12, 8, 8, 0.8);
-      backdrop-filter: blur(20px);
+      background: rgba(20, 10, 10, 0.9);
       border-bottom: 1px solid var(--border);
-      transition: all var(--transition);
-      transform: translateY(-100%);
-      animation: slideDown 0.6s ease 0.3s forwards;
+      backdrop-filter: blur(8px);
     }
-
-    @keyframes slideDown {
-      to { transform: translateY(0); }
-    }
-
-    .nav-container {
-      max-width: 1100px;
+    .nav-inner {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1.5rem;
-      height: 64px;
+      padding: 0 2rem;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .logo {
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
       color: var(--text);
       text-decoration: none;
-      position: relative;
-    }
-
-    .logo span { color: var(--accent); }
-
-    .nav-links {
+      letter-spacing: 0.05em;
       display: flex;
       align-items: center;
+      gap: 0.6rem;
+    }
+    .logo-icon {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E") no-repeat center;
+      mask-size: contain;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E") no-repeat center;
+      -webkit-mask-size: contain;
+    }
+    .nav-links {
+      display: flex;
       gap: 2rem;
       list-style: none;
     }
-
     .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       color: var(--text-muted);
       text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 2rem 4rem;
+      gap: 3rem;
+    }
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero-visual::after {
+      content: 'YOUR ART HERE';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+    }
+    .hero-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-text .role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .hero-text .tagline {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--danger);
+      margin-bottom: 2.5rem;
+    }
+    .hero-text .btn { padding: 1rem 2.5rem; }
+
+    /* SECTIONS */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    /* WORK EXAMPLES */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .work-item {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .work-item:hover {
+      border-color: var(--border-light);
+      transform: translateY(-4px);
+    }
+    .work-item .thumb {
+      aspect-ratio: 4/3;
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .work-item .thumb::after {
+      content: attr(data-label);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .work-item .thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+    .work-item:hover .thumb img { opacity: 1; }
+    .work-item figcaption {
+      padding: 1rem;
       font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      transition: color var(--transition);
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 50%;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: all var(--transition);
-      transform: translateX(-50%);
-    }
-
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* Sections */
-    section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 6rem 1.5rem;
-    }
-
-    .section-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-
-    .section-title.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border), transparent);
-    }
-
-    h2 {
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease 0.1s;
-    }
-
-    h2.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Hero */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      position: relative;
-      padding-top: 64px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      border: 1px solid var(--border);
-      padding: 0.35rem 1rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
       color: var(--text-muted);
-      margin-bottom: 2rem;
-      background: var(--bg-elevated);
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.5s forwards;
+      border-top: 1px solid var(--border);
     }
 
-    .hero-title {
-      font-size: clamp(3.5rem, 12vw, 9rem);
-      font-weight: 900;
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--accent) 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 4px 24px rgba(191, 90, 63, 0.15));
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.7s forwards, gradientMove 6s ease infinite;
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .hero-subtitle {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 500px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.9s forwards;
-    }
-
-    .hero-cta {
-      margin-top: 3rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1.1s forwards;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cards */
-    .card-grid {
+    /* PRICES */
+    .price-hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
-
-    .card {
+    .price-card {
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 2rem;
-      transition: all var(--transition);
       position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
     }
-
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .price-card.featured {
+      border-color: var(--accent-dim);
+      background: linear-gradient(180deg, var(--surface) 0%, rgba(201, 162, 39, 0.03) 100%);
     }
-
-    .card::before {
+    .price-card.featured::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s ease;
+      top: -1px; left: -1px; right: -1px;
+      height: 2px;
+      background: var(--accent);
     }
-
-    .card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(191, 90, 63, 0.1);
+    .price-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
     }
-
-    .card:hover::before { transform: scaleX(1); }
-
-    .card-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .card-price {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent-light);
-      font-family: 'Courier New', monospace;
-      letter-spacing: -0.02em;
-    }
-
-    .card-desc {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.7;
+    .price-tag {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--accent);
+      line-height: 1;
       margin-bottom: 1.5rem;
     }
-
-    .price-details {
-      margin-top: 1rem;
-      padding-top: 1rem;
+    .price-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 2;
+    }
+    .price-list li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding: 0.25rem 0;
+    }
+    .price-list li span:last-child {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .price-note {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
       border-top: 1px solid var(--border);
       font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.8;
+    }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .price-small {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      transition: all var(--transition);
+    }
+    .price-small:hover {
+      border-color: var(--border-light);
+      transform: translateY(-2px);
+    }
+    .price-small h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .price-small .amt {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .price-small p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .price-details strong {
-      color: var(--accent-light);
-      font-weight: 600;
-    }
-
-    .examples {
+    /* TOS PREVIEW */
+    .tos-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
-
-    .example {
-      aspect-ratio: 16/10;
-      background: var(--bg-elevated);
-      border: 1px dashed var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: all var(--transition);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .example:hover {
-      border-color: var(--accent);
-      color: var(--accent-light);
-      transform: scale(1.02);
-    }
-
-    .example img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.8;
-      transition: opacity var(--transition), transform 0.5s ease;
-    }
-
-    .example:hover img { opacity: 1; transform: scale(1.05); }
-
-    /* TOS */
-    .tos-list {
-      margin-top: 2rem;
-      border: 1px solid var(--border);
+    .tos-item {
       background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
     }
-
-    details {
-      border-bottom: 1px solid var(--border);
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: all 0.5s ease;
+    .tos-item h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
     }
-
-    details.visible {
-      opacity: 1;
-      transform: translateX(0);
+    .tos-item p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.7;
     }
-
-    details:last-child { border-bottom: none; }
-
-    summary {
+    .tos-full {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .tos-full summary {
       padding: 1.25rem 1.5rem;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
       color: var(--text);
       list-style: none;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      transition: all var(--transition);
-      user-select: none;
+      align-items: center;
+      transition: background var(--transition);
     }
-
-    summary:hover { 
-      background: var(--bg-elevated); 
-      padding-left: 1.75rem;
-    }
-
-    summary::after {
+    .tos-full summary:hover { background: var(--surface-hover); }
+    .tos-full summary::after {
       content: '+';
       font-size: 1.5rem;
       color: var(--accent);
       font-weight: 300;
-      transition: transform 0.4s ease, color 0.3s;
+      transition: transform 0.3s;
     }
-
-    details[open] summary::after { 
-      transform: rotate(45deg); 
-      color: var(--gold);
-    }
-
-    details[open] summary { 
-      background: var(--bg-elevated);
-      color: var(--accent-light);
-    }
-
-    .tos-content {
+    .tos-full[open] summary::after { transform: rotate(45deg); }
+    .tos-full .tos-inner {
       padding: 0 1.5rem 1.5rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      font-size: 0.875rem;
       line-height: 1.8;
-      animation: fadeIn 0.4s ease;
     }
+    .tos-full .tos-inner p { margin-bottom: 1rem; }
+    .tos-full .tos-inner p:last-child { margin-bottom: 0; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .tos-content p { margin-bottom: 1rem; }
-    .tos-content p:last-child { margin-bottom: 0; }
-
-    /* Links */
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .link-card {
+    /* QUEUE */
+    .queue-box {
       display: flex;
+      gap: 2rem;
       align-items: center;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
       background: var(--surface);
       border: 1px solid var(--border);
+      padding: 2rem;
+    }
+    .queue-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .queue-info p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      max-width: 500px;
+    }
+
+    /* SOCIALS */
+    .socials-bar {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
       text-decoration: none;
-      color: var(--text);
+      color: var(--text-muted);
       transition: all var(--transition);
-      opacity: 0;
-      transform: translateY(20px);
     }
-
-    .link-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .link-card:hover {
-      border-color: var(--accent);
-      background: var(--surface-hover);
-      transform: translateX(6px) translateY(-2px);
-      box-shadow: -4px 4px 16px rgba(191, 90, 63, 0.1);
-    }
-
-    .link-icon {
-      width: 40px; height: 40px;
+    .social:hover { color: var(--accent); transform: translateY(-3px); }
+    .social-icon {
+      width: 48px; height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-elevated);
       border: 1px solid var(--border);
+      background: var(--surface);
       color: var(--accent);
-      flex-shrink: 0;
       transition: all var(--transition);
     }
-
-    .link-card:hover .link-icon {
+    .social:hover .social-icon {
       border-color: var(--accent);
-      background: rgba(191, 90, 63, 0.1);
-      transform: rotate(-5deg) scale(1.1);
+      background: rgba(201, 162, 39, 0.08);
     }
-
-    .link-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .link-name {
-      font-size: 0.85rem;
-      font-weight: 700;
+    .social span {
+      font-size: 0.65rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
+      letter-spacing: 0.1em;
     }
 
-    .link-card:hover .link-name { color: var(--accent-light); }
-
-    .link-hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 0.15rem;
-    }
-
-    /* Footer */
+    /* FOOTER */
     footer {
       text-align: center;
-      padding: 3rem 1.5rem;
+      padding: 3rem 2rem;
       border-top: 1px solid var(--border);
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
     }
 
-    /* Mobile */
-    @media (max-width: 768px) {
+    /* MOBILE */
+    @media (max-width: 900px) {
+      #home { grid-template-columns: 1fr; padding-top: 100px; }
+      .hero-visual { max-width: 400px; margin: 0 auto; }
+      .works-grid { grid-template-columns: 1fr; }
+      .price-hero { grid-template-columns: 1fr; }
+      .price-grid { grid-template-columns: 1fr 1fr; }
+      .tos-grid { grid-template-columns: 1fr; }
+      .queue-box { flex-direction: column; text-align: center; }
       .nav-links { display: none; }
-      .hero-title { font-size: 4rem; }
-      section { padding: 4rem 1rem; }
-      .examples { grid-template-columns: repeat(2, 1fr); }
-      .age-buttons { flex-direction: column; width: 100%; }
-      .age-buttons .btn { width: 100%; }
-      .hero-cta { flex-direction: column; width: 100%; padding: 0 2rem; }
-      .hero-cta .btn { width: 100%; }
+      .socials-bar { gap: 2rem; }
     }
-
-    /* Scroll reveal helper */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    @media (max-width: 500px) {
+      .price-grid { grid-template-columns: 1fr; }
     }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .stagger-1 { transition-delay: 0.1s; }
-    .stagger-2 { transition-delay: 0.2s; }
-    .stagger-3 { transition-delay: 0.3s; }
-    .stagger-4 { transition-delay: 0.4s; }
-    .stagger-5 { transition-delay: 0.5s; }
   </style>
 </head>
 <body>
 
   <!-- AGE GATE -->
   <div id="age-gate">
-    <div class="age-card">
-      <div class="age-icon">🔞</div>
-      <h2>Adult Content Warning</h2>
-      <p>This website contains NSFW content. By entering, you confirm that you are of legal age to view adult material in your jurisdiction.</p>
-      <div class="age-buttons">
-        <button class="btn btn-primary" onclick="confirmAge()">I am 18 or older</button>
-        <button class="btn btn-deny" onclick="denyAge()">Leave</button>
+    <div class="age-box">
+      <h1>18+</h1>
+      <p>NSFW Content — Adults Only</p>
+      <div class="age-btns">
+        <button class="btn btn-solid" onclick="confirmAge()">Enter</button>
+        <button class="btn" onclick="denyAge()">Leave</button>
       </div>
     </div>
   </div>
 
-  <!-- NAVIGATION -->
+  <!-- NAV -->
   <nav>
-    <div class="nav-container">
-      <a href="#home" class="logo">MR.<span>R1N</span></a>
+    <div class="nav-inner">
+      <a href="#home" class="logo">
+        <span style="color:var(--accent)">MR.</span>R1N
+      </a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
+        <li><a href="#works">Works</a></li>
         <li><a href="#prices">Prices</a></li>
+        <li><a href="#comics">Comics</a></li>
+        <li><a href="#animation">Animation</a></li>
         <li><a href="#tos">TOS</a></li>
-        <li><a href="#links">Links</a></li>
+        <li><a href="#queue">Queue</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section id="home">
-    <div class="hero-badge">NSFW 2D Animator & Artist</div>
-    <h1 class="hero-title">MR.R1N</h1>
-    <p class="hero-subtitle">Full-time freelance furry artist. Commissions open selectively. Quality over speed.</p>
-    <div class="hero-cta">
-      <a href="#prices" class="btn btn-primary">Commission Info</a>
-      <a href="#links" class="btn">Contact Me</a>
+  <section id="home" style="border:none;">
+    <div class="hero-visual">
+      <!-- Замени src на свою картинку -->
+      <img src="" alt="" style="opacity:0;">
+    </div>
+    <div class="hero-text">
+      <div class="role">NSFW 2D Artist & Animator</div>
+      <h1>MR.R1N</h1>
+      <div class="tagline">Furry only. Dark. Direct. No fluff.</div>
+      <a href="#prices" class="btn btn-solid">View Prices</a>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-title reveal">About</div>
-    <h2 class="reveal stagger-1">Rin | He/Him</h2>
-    <p class="reveal stagger-2" style="color: var(--text-muted); max-width: 640px; line-height: 1.8;">
-      I'm a full-time NSFW furry artist and 2D animator. I specialize in expressive characters, clean linework, and atmospheric rendering. I work Monday through Friday and keep my queue organized via Trello. Turnaround time depends on complexity and current workload — check my live queue for status updates.
-    </p>
+  <!-- WORKS -->
+  <section id="works">
+    <div class="sec-title">Work Examples</div>
+    <div class="works-grid">
+      <figure class="work-item">
+        <div class="thumb" data-label="SKETCH"><img src="" alt=""></div>
+        <figcaption>Sketch B&W</figcaption>
+      </figure>
+      <figure class="work-item">
+        <div class="thumb" data-label="FLAT COLOR"><img src="" alt=""></div>
+        <figcaption>Flat Color</figcaption>
+      </figure>
+      <figure class="work-item">
+        <div class="thumb" data-label="FULL RENDER"><img src="" alt=""></div>
+        <figcaption>Full Render</figcaption>
+      </figure>
+    </div>
   </section>
 
   <!-- PRICES -->
   <section id="prices">
-    <div class="section-title reveal">Commission Types</div>
-    <h2 class="reveal stagger-1">Price List</h2>
+    <div class="sec-title">Commission Types</div>
     
-    <div class="card-grid">
-      <!-- Sketch -->
-      <div class="card reveal stagger-1">
-        <div class="card-header">
-          <div class="card-title">Sketch B&W</div>
-          <div class="card-price">$XX+</div>
-        </div>
-        <div class="card-desc">Rough or clean black & white sketch. Great for quick ideas and concepts. No color, no background.</div>
-        <div class="examples">
-          <div class="example">Ex 1</div>
-          <div class="example">Ex 2</div>
-          <div class="example">Ex 3</div>
-        </div>
-      </div>
-
-      <!-- Flat Color -->
-      <div class="card reveal stagger-2">
-        <div class="card-header">
-          <div class="card-title">Flat Color + Line</div>
-          <div class="card-price">$XX+</div>
-        </div>
-        <div class="card-desc">Cel-shaded or flat colored piece with clean linework. No background included — transparent or simple color fill.</div>
-        <div class="examples">
-          <div class="example">Ex 1</div>
-          <div class="example">Ex 2</div>
-          <div class="example">Ex 3</div>
+    <div class="price-hero">
+      <div class="price-card featured">
+        <h3>Full Render + Background</h3>
+        <div class="price-tag">$65 — $130+</div>
+        <ul class="price-list">
+          <li><span>Headshot</span><span>$65</span></li>
+          <li><span>Halfbody</span><span>$95</span></li>
+          <li><span>Fullbody</span><span>$130</span></li>
+          <li><span>Extra character</span><span>$90</span></li>
+          <li><span>With my chara</span><span>$60</span></li>
+          <li><span>Alt version</span><span>$10–$20</span></li>
+        </ul>
+        <div class="price-note">
+          Payment via PayPal. Full payment after sketch approval. Payment plans available for $200+ orders.
         </div>
       </div>
-
-      <!-- Full Render -->
-      <div class="card reveal stagger-3">
-        <div class="card-header">
-          <div class="card-title">Full Render + BG</div>
-          <div class="card-price">$65 — $130+</div>
+      <div>
+        <div class="price-grid" style="margin-bottom:1rem;">
+          <div class="price-small">
+            <h4>Sketch</h4>
+            <div class="amt">$XX+</div>
+            <p>B&W, rough or clean</p>
+          </div>
+          <div class="price-small">
+            <h4>Flat Color</h4>
+            <div class="amt">$XX+</div>
+            <p>Line + flat fill</p>
+          </div>
         </div>
-        <div class="card-desc">Fully rendered illustration with detailed background, lighting, and atmosphere. My highest tier for static artwork.</div>
-        <div class="price-details">
-          <strong>Headshot:</strong> $65<br>
-          <strong>Halfbody:</strong> $95<br>
-          <strong>Fullbody:</strong> $130<br>
-          <strong>Extra character:</strong> $90 each<br>
-          <strong>If art includes my chara:</strong> $60<br>
-          <strong>Alt version</strong> (x-ray, emotion, cum, etc.): $10–$20
-        </div>
-        <div class="examples" style="margin-top: 1rem;">
-          <div class="example">Ex 1</div>
-          <div class="example">Ex 2</div>
-          <div class="example">Ex 3</div>
-        </div>
-      </div>
-
-      <!-- Comic -->
-      <div class="card reveal stagger-4">
-        <div class="card-header">
-          <div class="card-title">Comic</div>
-          <div class="card-price">$XX+/page</div>
-        </div>
-        <div class="card-desc">Multi-panel sequential art. Pricing depends on page count, rendering style per panel, and complexity of scenes.</div>
-        <div class="examples">
-          <div class="example">Ex 1</div>
-          <div class="example">Ex 2</div>
-          <div class="example">Ex 3</div>
+        <div class="price-grid">
+          <div class="price-small" id="comics">
+            <h4>Comic</h4>
+            <div class="amt">$XX+</div>
+            <p>Per page</p>
+          </div>
+          <div class="price-small" id="animation">
+            <h4>Animation</h4>
+            <div class="amt">$XX+</div>
+            <p>Per second</p>
+          </div>
         </div>
       </div>
-
-      <!-- Animation -->
-      <div class="card reveal stagger-5">
-        <div class="card-header">
-          <div class="card-title">Frame-by-Frame</div>
-          <div class="card-price">$XX+/sec</div>
-        </div>
-        <div class="card-desc">Traditional frame-by-frame 2D animation. Price scales with length, character count, and detail level per frame.</div>
-        <div class="examples">
-          <div class="example">Ex 1</div>
-          <div class="example">Ex 2</div>
-          <div class="example">Ex 3</div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="reveal stagger-2" style="margin-top: 2rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);">
-      <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8;">
-        <strong style="color: var(--accent-light);">Payment:</strong> PayPal. Full payment after the sketch is approved. Payment plans available for commissions from $200.<br>
-        <strong style="color: var(--accent-light);">Deadline:</strong> Discussed individually. Typically 1–2 months depending on queue size.
-      </p>
     </div>
   </section>
 
   <!-- TOS -->
   <section id="tos">
-    <div class="section-title reveal">Terms of Service</div>
-    <h2 class="reveal stagger-1">Rules & Policies</h2>
-    <p class="reveal stagger-1" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Updated July 15, 2026. Mister Rin.</p>
-    
-    <div class="tos-list">
-      <details class="reveal stagger-1">
-        <summary>General</summary>
-        <div class="tos-content">
-          <p>I only draw anthropomorphic characters.</p>
-          <p>You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette.</p>
-          <p>You may also provide photo references and 3D references if available.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-2">
-        <summary>Payment</summary>
-        <div class="tos-content">
-          <p>Payment is accepted via PayPal in USD.</p>
-          <p>Other payment methods may also be discussed if you are, for example, from the CIS or China.</p>
-          <p>If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones.</p>
-          <p>Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval!</p>
-          <p>Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process. This is simply to protect me as the artist from potential fraud.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-3">
-        <summary>Process</summary>
-        <div class="tos-content">
-          <p>In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality.</p>
-          <p>I do this in every case, even if you receive updates and the finished commission through Telegram.</p>
-          <p>I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time because you are interested or worried, just tell me!</p>
-          <p>I include 2-3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character, their design, or anything similar are free, even after the artwork is fully finished, but only if it was genuinely my mistake.</p>
-          <p>Please note that I do not charge extra for complex character designs, such as characters with many spots or stripes, because I simplify those details. I still try to keep the placement of markings and similar features accurate within reason.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-4">
-        <summary>Deadline</summary>
-        <div class="tos-content">
-          <p>Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance.</p>
-          <p>A commission usually takes 1-2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it.</p>
-          <p>I organize my work based on complexity, my current workload, and my creative capacity, but I always try to create the highest-quality artwork I am capable of making for you.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-1">
-        <summary>Rights</summary>
-        <div class="tos-content">
-          <p>Purchasing a commission does not transfer copyright ownership to you.</p>
-          <p>You may publish it, post it, use it as an avatar, and do anything you want with it for personal use, as long as you do not crop out my signature from the finished artwork. Cropping it for an avatar is fine.</p>
-          <p>You must also credit me as the artist on any website where you publish my work.</p>
-          <p>You may not publish any of my content on paid platforms or use it as paid content. Anything is allowed except commercial use.</p>
-          <p>You may not train any local AI model on my artwork or use it to replicate my style. Dude, it still will not capture emotions as well as I do anyway lol.</p>
-          <p>I have the right to use your commission for promotional purposes. For example, I may use it in banners, post it, crop it, edit it, or develop it further in any way. I may also publish it and identify you or your username as the client unless we have agreed otherwise.</p>
-          <p>During the commission process, you must tell me in advance if you do not want me to identify you or your username as the client. In that case, I will publish the commission anonymously without mentioning you or your username.</p>
-          <p>You must also tell me in advance if you do not want the commission published at all, or if you do not want a more sensitive part of it published. In that case, the commission will remain completely private and available only to you.</p>
-          <p>You do not need to worry about this! I do not charge extra for privacy.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-2">
-        <summary>Refunds</summary>
-        <div class="tos-content">
-          <p>A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately.</p>
-          <p>Once work has begun, refunds are generally not available. However, if I am unable to complete the commission, or if no meaningful progress has been made, a refund may still be issued.</p>
-        </div>
-      </details>
-      
-      <details class="reveal stagger-3">
-        <summary>What Will I Not Draw?</summary>
-        <div class="tos-content">
-          <p>Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration. Sorry, guys, but that is not for me.</p>
-          <p>Other than that, I have no taboos.</p>
-          <p>I will be happy to help you come up with an idea or story if you are having trouble with it.</p>
-          <p>I will also be DAMN happy to receive creative freedom but first I will need to learn more about your character and their backstory!</p>
-        </div>
-      </details>
+    <div class="sec-title">Terms of Service</div>
+    <div class="tos-grid">
+      <div class="tos-item">
+        <h4>General</h4>
+        <p>Anthro characters only. Reference sheet or detailed written description + color palette required.</p>
+      </div>
+      <div class="tos-item">
+        <h4>Payment</h4>
+        <p>PayPal USD. Full payment after sketch approval. Plans available for $200+ commissions.</p>
+      </div>
+      <div class="tos-item">
+        <h4>Process</h4>
+        <p>Google Drive folder for WIPs + source file. 2–3 free revisions. Complex markings simplified at no extra cost.</p>
+      </div>
+      <div class="tos-item">
+        <h4>Deadline</h4>
+        <p>No strict deadlines unless discussed. Typically 1–2 months. Organized by complexity and creative capacity.</p>
+      </div>
+      <div class="tos-item">
+        <h4>Rights</h4>
+        <p>Personal use only. Credit required. No commercial use, no AI training. I may use for promo unless privacy is requested.</p>
+      </div>
+      <div class="tos-item">
+        <h4>Refunds</h4>
+        <p>Full refund if not started. Partial if sketch done. Refund possible if I cannot complete. No extra charge for privacy.</p>
+      </div>
+    </div>
+
+    <details class="tos-full">
+      <summary>Read Full Terms of Service</summary>
+      <div class="tos-inner">
+        <p><strong>GENERAL.</strong> I only draw anthropomorphic characters. You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette. You may also provide photo references and 3D references if available.</p>
+        <p><strong>PAYMENT.</strong> Payment is accepted via PayPal in USD. Other payment methods may also be discussed if you are, for example, from the CIS or China. If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones. Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval! Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process. This is simply to protect me as the artist from potential fraud.</p>
+        <p><strong>PROCESS.</strong> In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality. I do this in every case, even if you receive updates and the finished commission through Telegram. I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time because you are interested or worried, just tell me! I include 2-3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character, their design, or anything similar are free, even after the artwork is fully finished, but only if it was genuinely my mistake. Please note that I do not charge extra for complex character designs, such as characters with many spots or stripes, because I simplify those details. I still try to keep the placement of markings and similar features accurate within reason.</p>
+        <p><strong>DEADLINE.</strong> Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance. A commission usually takes 1-2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it. I organize my work based on complexity, my current workload, and my creative capacity, but I always try to create the highest-quality artwork I am capable of making for you.</p>
+        <p><strong>RIGHTS.</strong> Purchasing a commission does not transfer copyright ownership to you. You may publish it, post it, use it as an avatar, and do anything you want with it for personal use, as long as you do not crop out my signature from the finished artwork. Cropping it for an avatar is fine. You must also credit me as the artist on any website where you publish my work. You may not publish any of my content on paid platforms or use it as paid content. Anything is allowed except commercial use. You may not train any local AI model on my artwork or use it to replicate my style. Dude, it still will not capture emotions as well as I do anyway lol. I have the right to use your commission for promotional purposes. For example, I may use it in banners, post it, crop it, edit it, or develop it further in any way. I may also publish it and identify you or your username as the client unless we have agreed otherwise. During the commission process, you must tell me in advance if you do not want me to identify you or your username as the client. In that case, I will publish the commission anonymously without mentioning you or your username. You must also tell me in advance if you do not want the commission published at all, or if you do not want a more sensitive part of it published. In that case, the commission will remain completely private and available only to you. You do not need to worry about this! I do not charge extra for privacy.</p>
+        <p><strong>REFUNDS.</strong> A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately. Once work has begun, refunds are generally not available. However, if I am unable to complete the commission, or if no meaningful progress has been made, a refund may still be issued.</p>
+        <p><strong>WILL NOT DRAW.</strong> Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration. Sorry, guys, but that is not for me. Other than that, I have no taboos. I will be happy to help you come up with an idea or story if you are having trouble with it. I will also be DAMN happy to receive creative freedom but first I will need to learn more about your character and their backstory!</p>
+        <p style="color:var(--text); margin-top:1rem;">Updated July 15, 2026. Mister Rin.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- QUEUE -->
+  <section id="queue">
+    <div class="sec-title">Queue & Availability</div>
+    <div class="queue-box">
+      <div class="queue-info">
+        <h3>Current Status</h3>
+        <p>I work Monday through Friday. Typical turnaround is 1–2 months depending on queue size and complexity. Track live progress, see your position, and check estimated completion on my public Trello board.</p>
+        <a href="#" class="btn btn-solid" target="_blank" rel="noopener">Open Trello Queue</a>
+      </div>
     </div>
   </section>
 
-  <!-- LINKS -->
-  <section id="links">
-    <div class="section-title reveal">Connect</div>
-    <h2 class="reveal stagger-1">Find Me Here</h2>
-    
-    <div class="links-grid">
-      <a href="#" class="link-card reveal stagger-1" target="_blank" rel="noopener">
-        <div class="link-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+  <!-- CONTACT / SOCIALS -->
+  <section id="contact" style="border-bottom:1px solid var(--border);">
+    <div class="sec-title">Connect</div>
+    <div class="socials-bar">
+      <a href="#" class="social" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         </div>
-        <div class="link-info">
-          <span class="link-name">FurAffinity</span>
-          <span class="link-hint">Main gallery & uploads</span>
-        </div>
+        <span>FurAffinity</span>
       </a>
-
-      <a href="#" class="link-card reveal stagger-2" target="_blank" rel="noopener">
-        <div class="link-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+      <a href="#" class="social" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
         </div>
-        <div class="link-info">
-          <span class="link-name">X / Twitter</span>
-          <span class="link-hint">Announcements & WIPs</span>
-        </div>
+        <span>Twitter / X</span>
       </a>
-
-      <a href="#" class="link-card reveal stagger-3" target="_blank" rel="noopener">
-        <div class="link-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.076 1.576-5.713 2.21l-.002.001c-.552.213-1.054.46-1.498.738a4.85 4.85 0 0 0-.94.715 2.83 2.83 0 0 0-.68 1.065 2.32 2.32 0 0 0-.146.83v.006c0 .197.03.395.088.588.116.39.348.747.68 1.065.286.267.608.51.94.715.444.278.946.525 1.498.738l.002.001c1.637.634 3.645 1.41 5.713 2.21l8.609 3.33c.413.16.85.242 1.29.242.44 0 .877-.082 1.29-.242.826-.32 1.49-.91 1.87-1.65.38-.74.48-1.59.29-2.4l-1.86-7.68a3.24 3.24 0 0 0-.86-1.48 3.01 3.01 0 0 0-1.44-.82 2.94 2.94 0 0 0-.66-.075z"/><path d="M9.5 11.5l5 2.5"/></svg>
+      <a href="#" class="social" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.076 1.576-5.713 2.21l-.002.001c-.552.213-1.054.46-1.498.738a4.85 4.85 0 0 0-.94.715 2.83 2.83 0 0 0-.68 1.065 2.32 2.32 0 0 0-.146.83v.006c0 .197.03.395.088.588.116.39.348.747.68 1.065.286.267.608.51.94.715.444.278.946.525 1.498.738l.002.001c1.637.634 3.645 1.41 5.713 2.21l8.609 3.33c.413.16.85.242 1.29.242.44 0 .877-.082 1.29-.242.826-.32 1.49-.91 1.87-1.65.38-.74.48-1.59.29-2.4l-1.86-7.68a3.24 3.24 0 0 0-.86-1.48 3.01 3.01 0 0 0-1.44-.82 2.94 2.94 0 0 0-.66-.075z"/><path d="M9.5 11.5l5 2.5"/></svg>
         </div>
-        <div class="link-info">
-          <span class="link-name">Telegram Channel</span>
-          <span class="link-hint">Public updates</span>
-        </div>
+        <span>Telegram Channel</span>
       </a>
-
-      <a href="#" class="link-card reveal stagger-4" target="_blank" rel="noopener">
-        <div class="link-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <a href="#" class="social" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <div class="link-info">
-          <span class="link-name">Telegram PM</span>
-          <span class="link-hint">Direct order discussion</span>
-        </div>
+        <span>Telegram DM</span>
       </a>
-
-      <a href="#" class="link-card reveal stagger-5" target="_blank" rel="noopener">
-        <div class="link-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      <a href="#" class="social" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
         </div>
-        <div class="link-info">
-          <span class="link-name">Trello Queue</span>
-          <span class="link-hint">Live waitlist & progress</span>
-        </div>
+        <span>Trello Queue</span>
       </a>
     </div>
   </section>
 
   <footer>
-    <p>© <span id="year"></span> MR.R1N. All rights reserved.</p>
+    <p>© <span id="year"></span> MR.R1N. ALL RIGHTS RESERVED.</p>
   </footer>
 
   <script>
-    // Age Gate Logic
+    // Age gate
     function confirmAge() {
-      localStorage.setItem('mr_rin_age_verified', 'true');
+      localStorage.setItem('mr_rin_age', '1');
       document.getElementById('age-gate').classList.add('hidden');
       document.body.style.overflow = 'auto';
     }
-
-    function denyAge() {
-      window.location.href = 'https://www.google.com';
-    }
-
-    // Check age verification on load
-    if (localStorage.getItem('mr_rin_age_verified') === 'true') {
+    function denyAge() { window.location.href = 'https://www.google.com'; }
+    if (localStorage.getItem('mr_rin_age') === '1') {
       document.getElementById('age-gate').classList.add('hidden');
     } else {
       document.body.style.overflow = 'hidden';
@@ -1015,50 +753,13 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.reveal, .section-title, h2, .card, details, .link-card').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Smooth scroll for nav links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-    });
-
-    // Nav background on scroll
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const nav = document.querySelector('nav');
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 100) {
-        nav.style.background = 'rgba(12, 8, 8, 0.95)';
-        nav.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)';
-      } else {
-        nav.style.background = 'rgba(12, 8, 8, 0.8)';
-        nav.style.boxShadow = 'none';
-      }
-      
-      lastScroll = currentScroll;
     });
   </script>
 </body>
