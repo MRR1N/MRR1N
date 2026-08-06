@@ -17,7 +17,7 @@
   <title>MR.RIN — Artist & Animator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Roboto+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#090707;--wine:#291315;--wine-deep:#1a0c0e;--line:rgba(124,46,42,.50);--gold:#FEB341;--gold-hi:#FEB341;--red:#9e372e;--text:#e8d8d1;--muted:#b89a91;--faint:#725c56;--open:#9cc94a;--closed:#b84d43;--page:1180px;--nav-h:76px;--dock-h:86px;--ease:cubic-bezier(.22,.72,.2,1)}
     *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;min-width:320px;color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.55;overflow-x:hidden;padding-bottom:var(--dock-h);background:radial-gradient(circle at 83% 9%,rgba(103,29,32,.17),transparent 28rem),radial-gradient(circle at 12% 28%,rgba(82,33,25,.12),transparent 31rem),linear-gradient(180deg,#0a0707 0%,#090707 55%,#070505 100%)}
@@ -871,6 +871,376 @@
       html[lang="ru"] .price-tier{font-size:14px}
     }
 
+  
+    /* ==========================================================
+       V9 final polish
+       ========================================================== */
+
+    /* Real FA mark */
+    .nav-fa-logo{
+      display:block;
+      width:27px;
+      height:27px;
+      object-fit:contain;
+    }
+
+    /* Give the top social icons room to breathe. */
+    .nav-socials{
+      gap:10px !important;
+    }
+
+    .nav-social-link{
+      width:44px !important;
+      border-left:0 !important;
+      border-right:0 !important;
+    }
+
+    .nav-social-link:last-child{
+      border-right:0 !important;
+    }
+
+    /* Telegram DM no longer has a brighter/special state. */
+    .nav-social-link.primary{
+      color:#FEB341 !important;
+      background:transparent !important;
+    }
+
+    .nav-social-link.primary:hover,
+    .nav-social-link.primary:focus-visible{
+      background:rgba(89,31,24,.16) !important;
+    }
+
+    /* Queue nav is now a deliberate jump back to the hero/top. */
+
+    /* Queue: no green dot, softer line endings. */
+    .queue-status::before{
+      content:none !important;
+      display:none !important;
+    }
+
+    .hero-queue{
+      position:relative;
+      border-top:0 !important;
+      border-bottom:0 !important;
+      background:linear-gradient(90deg,rgba(42,15,16,.46),rgba(18,9,10,.08)) !important;
+      overflow:visible;
+    }
+
+    .hero-queue::before,
+    .hero-queue::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:1px;
+      pointer-events:none;
+      background:linear-gradient(
+        90deg,
+        transparent 0,
+        rgba(131,48,43,.20) 5%,
+        rgba(131,48,43,.52) 22%,
+        rgba(131,48,43,.42) 72%,
+        rgba(131,48,43,.10) 92%,
+        transparent 100%
+      );
+    }
+
+    .hero-queue::before{top:0}
+    .hero-queue::after{bottom:0}
+
+    /* Price heading: warning on the same baseline; no scratch mark before Price List. */
+    .price-section-head{
+      align-items:center !important;
+      gap:16px !important;
+    }
+
+    .price-section-head::before{
+      content:none !important;
+      display:none !important;
+    }
+
+    .price-section-head::after{
+      order:2;
+      min-width:50px;
+      background:linear-gradient(
+        90deg,
+        rgba(132,49,43,.10),
+        rgba(132,49,43,.50) 28%,
+        rgba(132,49,43,.32) 75%,
+        transparent
+      ) !important;
+    }
+
+    .price-section-head h2{
+      order:1;
+    }
+
+    .section-warning{
+      order:3;
+      flex:0 0 auto;
+      color:#a94a42;
+      text-transform:uppercase;
+      font:600 11px/1 "Barlow Condensed",sans-serif;
+      letter-spacing:.11em;
+      white-space:nowrap;
+    }
+
+    #prices{
+      padding-top:22px !important;
+    }
+
+    /* Closed cards: only the badge remains; artwork itself is visibly unavailable. */
+    .closed-work .price-image{
+      overflow:hidden;
+    }
+
+    .closed-work .price-image img{
+      filter:blur(3.2px) saturate(.24) brightness(.43) !important;
+      transform:scale(1.035);
+    }
+
+    .closed-work:hover .price-image img{
+      filter:blur(3.2px) saturate(.24) brightness(.46) !important;
+      transform:scale(1.045) !important;
+    }
+
+    .closed-work .price-meta{
+      padding-top:14px;
+    }
+
+    /* Final price notes */
+    .render-note{
+      color:#9c7468 !important;
+      margin-top:8px !important;
+      font-style:italic;
+    }
+
+    /* Harmonize all thin section rules: longer, softer endings. */
+    .section-head::after{
+      background:linear-gradient(
+        90deg,
+        rgba(132,49,43,.48) 0,
+        rgba(132,49,43,.35) 52%,
+        rgba(132,49,43,.12) 84%,
+        transparent 100%
+      ) !important;
+    }
+
+    /* TOS outer rules now fade instead of stopping abruptly. */
+    .tos-frame{
+      position:relative;
+      border-top:0 !important;
+      border-bottom:0 !important;
+    }
+
+    .tos-frame::before,
+    .tos-frame::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:1px;
+      pointer-events:none;
+      background:linear-gradient(
+        90deg,
+        transparent 0,
+        rgba(132,49,43,.15) 4%,
+        rgba(132,49,43,.50) 18%,
+        rgba(132,49,43,.34) 78%,
+        rgba(132,49,43,.08) 94%,
+        transparent 100%
+      );
+    }
+
+    .tos-frame::before{top:0}
+    .tos-frame::after{bottom:0}
+
+    /* Bring the TOS title inward so it aligns with the document. */
+    .tos-toggle{
+      padding-left:22px !important;
+      padding-right:22px !important;
+    }
+
+    /* Tighter, more editorial TOS rhythm. */
+    .tos-document{
+      line-height:1.68 !important;
+    }
+
+    .tos-document h3{
+      margin:29px 0 10px !important;
+    }
+
+    .tos-document p{
+      margin:0 0 10px !important;
+    }
+
+    .tos-document p:last-of-type{
+      margin-bottom:0 !important;
+    }
+
+    /* The 'won't draw' underline uses the same warning red as its heading. */
+    #tos-no-draw::after{
+      background:linear-gradient(90deg,var(--red),rgba(158,55,46,.34),transparent) !important;
+    }
+
+    /* Russian version: use an actual Cyrillic condensed family instead of fallback sans. */
+    html[lang="ru"] .nav-links a,
+    html[lang="ru"] .hero-sub,
+    html[lang="ru"] .hero-queue-kicker,
+    html[lang="ru"] .hero-queue-title,
+    html[lang="ru"] .queue-status,
+    html[lang="ru"] .btn,
+    html[lang="ru"] .section-head h2,
+    html[lang="ru"] .section-warning,
+    html[lang="ru"] .price-meta h3,
+    html[lang="ru"] .price-value,
+    html[lang="ru"] .price-tier,
+    html[lang="ru"] .tos-toggle-title,
+    html[lang="ru"] .tos-toggle-hint,
+    html[lang="ru"] .tos-nav a,
+    html[lang="ru"] .tos-document h3{
+      font-family:"Roboto Condensed","Arial Narrow",sans-serif !important;
+      font-weight:600;
+    }
+
+    html[lang="ru"] .nav-links a{
+      font-size:13px !important;
+      letter-spacing:.04em !important;
+    }
+
+    html[lang="ru"] .hero-sub{
+      font-size:22px !important;
+      letter-spacing:.035em !important;
+    }
+
+    html[lang="ru"] .hero-queue-title{
+      font-size:17px !important;
+      letter-spacing:.04em !important;
+    }
+
+    html[lang="ru"] .section-head h2{
+      font-size:34px !important;
+      letter-spacing:.035em !important;
+    }
+
+    html[lang="ru"] .price-meta h3{
+      font-size:18px !important;
+      letter-spacing:.04em !important;
+    }
+
+    html[lang="ru"] .tos-toggle-title{
+      font-size:22px !important;
+      letter-spacing:.045em !important;
+    }
+
+    html[lang="ru"] .tos-document h3{
+      font-size:17px !important;
+      letter-spacing:.04em !important;
+    }
+
+    html[lang="ru"] .tos-document{
+      font-family:Inter,system-ui,sans-serif;
+      font-size:14px !important;
+      line-height:1.66 !important;
+    }
+
+    /* Softer first-load motion. Hero title gets a restrained type/reveal feel. */
+    .reveal{
+      opacity:0;
+      transform:translateY(8px);
+      filter:blur(4px);
+      transition:
+        opacity .92s cubic-bezier(.2,.72,.2,1),
+        transform .92s cubic-bezier(.2,.72,.2,1),
+        filter .92s ease !important;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+      filter:blur(0);
+    }
+
+    .hero-title.reveal{
+      opacity:1;
+      transform:none;
+      filter:none;
+      clip-path:inset(0 100% 0 0);
+    }
+
+    .hero-title.reveal.visible{
+      animation:heroTypeReveal .92s steps(7,end) .08s both;
+    }
+
+    @keyframes heroTypeReveal{
+      from{clip-path:inset(0 100% 0 0)}
+      to{clip-path:inset(0 0 0 0)}
+    }
+
+    .hero-sub.reveal.visible{
+      transition-delay:.20s !important;
+    }
+
+    .hero-queue.reveal.visible{
+      transition-delay:.34s !important;
+    }
+
+    @media(max-width:900px){
+      .nav-socials{
+        gap:7px !important;
+      }
+
+      .nav-social-link{
+        width:41px !important;
+      }
+
+      .nav-fa-logo{
+        width:24px;
+        height:24px;
+      }
+
+      .tos-toggle{
+        padding-left:16px !important;
+        padding-right:16px !important;
+      }
+    }
+
+    @media(max-width:640px){
+      .nav-socials{
+        gap:4px !important;
+      }
+
+      .nav-social-link{
+        width:37px !important;
+      }
+
+      .price-section-head{
+        flex-wrap:wrap;
+      }
+
+      .price-section-head::after{
+        flex-basis:28px;
+      }
+
+      .section-warning{
+        font-size:9px;
+        letter-spacing:.07em;
+      }
+
+      html[lang="ru"] .hero-sub{
+        font-size:18px !important;
+      }
+
+      html[lang="ru"] .section-head h2{
+        font-size:27px !important;
+      }
+
+      .tos-toggle{
+        padding-left:12px !important;
+        padding-right:12px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -892,15 +1262,7 @@
       <div class="nav-socials" aria-label="Social links">
         <a class="nav-social-link" href="#" data-link="fa" target="_blank" rel="noopener noreferrer"
            aria-label="FurAffinity" data-tooltip="FurAffinity">
-          <span class="nav-social-icon fa-paw" aria-hidden="true">
-            <svg viewBox="0 0 64 64">
-              <ellipse cx="32" cy="42" rx="15" ry="12"/>
-              <ellipse cx="14.5" cy="27" rx="7" ry="9" transform="rotate(-24 14.5 27)"/>
-              <ellipse cx="27" cy="18" rx="6.5" ry="9" transform="rotate(-8 27 18)"/>
-              <ellipse cx="41" cy="18.5" rx="6.5" ry="9" transform="rotate(8 41 18.5)"/>
-              <ellipse cx="52" cy="28" rx="7" ry="9" transform="rotate(24 52 28)"/>
-            </svg>
-          </span>
+          <img class="nav-fa-logo" src="data:image/png;base64,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" alt="" aria-hidden="true">
         </a>
 
         <a class="nav-social-link" href="#" data-link="x" target="_blank" rel="noopener noreferrer"
@@ -922,8 +1284,9 @@
            aria-label="Telegram DM" data-tooltip="Telegram DM">
           <span class="nav-social-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="4"></circle>
-              <path d="M4.5 21c.8-4.2 3.4-6.4 7.5-6.4s6.7 2.2 7.5 6.4"></path>
+              <path d="M5 5.5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-5 3v-3H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"></path>
+              <path d="M7.5 9.5h9"></path>
+              <path d="M7.5 13h6"></path>
             </svg>
           </span>
         </a>
@@ -943,7 +1306,7 @@
       <div class="nav-links" id="navLinks">
         <a href="#prices" data-i18n="navPrices">Prices</a>
         <a href="#tos" data-i18n="navTos">TOS</a>
-        <a href="#queue" data-i18n="navQueue">Queue</a>
+        <a href="#top" data-i18n="navQueue">Queue</a>
 
         <button class="lang-toggle" id="langToggle" type="button" data-lang="en" aria-label="Change language">
           <span class="lang-indicator" aria-hidden="true"></span>
@@ -990,68 +1353,81 @@
         </div>
       </div>
     </section>
-    <div class="content-warning" data-i18n="warningBar">18+ CONTENT WARNING — adult-themed artwork may be present on this website.</div>
-
-    <section class="section" id="prices">
+<section class="section" id="prices">
       <div class="shell">
-        <div class="section-head reveal"><h2 data-i18n="priceList">Price list</h2></div>
+        <div class="section-head price-section-head reveal"><h2 data-i18n="priceList">Price list</h2><span class="section-warning" data-i18n="warningBar">18+ CONTENT WARNING</span></div>
         <div class="price-grid stagger">
           <article class="price-card">
-            <div class="price-image"><img src="assets/sketch.jpg" alt="Sketch commission example" width="900" height="560" loading="lazy" decoding="async" onerror="this.style.opacity='.08';this.removeAttribute('src');"></div>
+            <div class="price-image">
+              <img src="assets/sketch.jpg" alt="Sketch commission example" width="900" height="560"
+                   loading="lazy" decoding="async"
+                   onerror="this.style.opacity='.08';this.removeAttribute('src');">
+            </div>
             <div class="price-meta">
               <h3 data-i18n="sketch">Sketch B&W</h3>
               <div class="price-tier-list">
                 <div class="price-tier"><span data-i18n="halfbody">Halfbody</span><strong>$30</strong></div>
                 <div class="price-tier"><span data-i18n="fullbody">Fullbody</span><strong>$50</strong></div>
-                <div class="price-tier price-tier-note"><span data-i18n="sketchSheet">B&W sketch sheet — 2 characters</span><strong>$70</strong></div>
-                <p class="price-small-note" data-i18n="sketchSheetNote">About 4 poses / angles.</p>
+                <div class="price-tier price-tier-note"><span data-i18n="sketchSheet">Sketch sheet with two characters</span><strong>$90</strong></div>
+                <p class="price-small-note" data-i18n="sketchSheetNote">4 poses / angles.</p>
               </div>
             </div>
           </article>
 
           <article class="price-card">
-            <div class="price-image"><img src="assets/flat.jpg" alt="Flat color commission example" width="900" height="560" loading="lazy" decoding="async" onerror="this.style.opacity='.08';this.removeAttribute('src');"></div>
+            <div class="price-image">
+              <img src="assets/flat.jpg" alt="Flat color commission example" width="900" height="560"
+                   loading="lazy" decoding="async"
+                   onerror="this.style.opacity='.08';this.removeAttribute('src');">
+            </div>
             <div class="price-meta">
               <h3 data-i18n="flat">Flat color</h3>
               <div class="price-tier-list">
-                <div class="price-tier muted-tier"><span data-i18n="flatTba">Pricing will be added later</span><strong>—</strong></div>
+                <div class="price-tier"><span data-i18n="headshot">Headshot</span><strong>$30</strong></div>
+                <div class="price-tier"><span data-i18n="halfbody">Halfbody</span><strong>$50</strong></div>
+                <div class="price-tier"><span data-i18n="fullbody">Fullbody</span><strong>$75</strong></div>
               </div>
             </div>
           </article>
 
           <article class="price-card">
-            <div class="price-image"><img src="assets/render.jpg" alt="Full render commission example" width="900" height="560" loading="lazy" decoding="async" onerror="this.style.opacity='.08';this.removeAttribute('src');"></div>
+            <div class="price-image">
+              <img src="assets/render.jpg" alt="Full render commission example" width="900" height="560"
+                   loading="lazy" decoding="async"
+                   onerror="this.style.opacity='.08';this.removeAttribute('src');">
+            </div>
             <div class="price-meta">
               <h3 data-i18n="render">Full render</h3>
               <div class="price-tier-list">
                 <div class="price-tier"><span data-i18n="headshot">Headshot</span><strong>$65</strong></div>
                 <div class="price-tier"><span data-i18n="halfbody">Halfbody</span><strong>$95</strong></div>
                 <div class="price-tier"><span data-i18n="fullbody">Fullbody</span><strong>$130</strong></div>
+                <p class="price-small-note render-note" data-i18n="renderBgNote">* Price includes background.</p>
               </div>
             </div>
           </article>
 
-          <article class="price-card comic-closed">
+          <article class="price-card comic-closed closed-work">
             <div class="price-image">
-              <img src="assets/comic.jpg" alt="Comic commission example" width="900" height="560" loading="lazy" decoding="async" onerror="this.style.opacity='.08';this.removeAttribute('src');">
+              <img src="assets/comic.jpg" alt="Comic commission example" width="900" height="560"
+                   loading="lazy" decoding="async"
+                   onerror="this.style.opacity='.08';this.removeAttribute('src');">
               <span class="closed-badge" data-i18n="closed">Closed</span>
             </div>
             <div class="price-meta">
               <h3 data-i18n="comic">Comic pages</h3>
-              <div class="price-tier-list">
-                <div class="price-tier closed-tier"><span data-i18n="commissionsClosed">Commissions currently closed</span><strong data-i18n="closed">Closed</strong></div>
-              </div>
             </div>
           </article>
 
-          <article class="price-card">
-            <div class="price-image"><img src="assets/animation.jpg" alt="Frame-by-frame animation commission example" width="900" height="560" loading="lazy" decoding="async" onerror="this.style.opacity='.08';this.removeAttribute('src');"></div>
+          <article class="price-card animation-closed closed-work">
+            <div class="price-image">
+              <img src="assets/animation.jpg" alt="Frame-by-frame animation commission example" width="900" height="560"
+                   loading="lazy" decoding="async"
+                   onerror="this.style.opacity='.08';this.removeAttribute('src');">
+              <span class="closed-badge" data-i18n="closed">Closed</span>
+            </div>
             <div class="price-meta">
               <h3 data-i18n="animation">Animation</h3>
-              <div class="price-tier-list">
-                <div class="price-tier"><span data-i18n="animationFrom">Frame-by-frame animation</span><strong>$270+</strong></div>
-                <p class="price-small-note" data-i18n="animationAsk">Ask me for a quote.</p>
-              </div>
             </div>
           </article>
 
@@ -1059,7 +1435,7 @@
             <div class="price-meta"><h3 data-i18n="extras">Extras & add-ons</h3></div>
             <ul class="extras-list">
               <li><span data-i18n="extraAlt">Alt version (cum, x-ray, etc.)</span><strong>$10–20</strong></li>
-              <li><span data-i18n="extraChar">Additional character</span><strong>$90 each</strong></li>
+              <li><span data-i18n="extraChar">Additional character</span><strong>+70%</strong></li>
               <li><span data-i18n="withMyChara">With my character (Mister Rin or Rylan)</span><strong>$60</strong></li>
             </ul>
           </article>
@@ -1140,10 +1516,10 @@
     };
     const i18n={
       en:{
-        skipContent:"Skip to content",commissionMe:"Commission me",ageTitle:"Adult content",ageText:"This website may contain adult-themed artwork. By entering, you confirm that you are legally allowed to view such content in your region.",ageEnter:"Enter",ageLeave:"Leave",navPrices:"Prices",navTos:"TOS",navQueue:"Queue",heroKicker:"Commission site",heroSub:"NSFW 2D artist & animator",heroNote:"Furry only. Dark. Direct. No fluff.",viewPrices:"View prices",viewQueue:"View queue",warningBar:"18+ CONTENT WARNING — adult-themed artwork may be present on this website.",priceList:"Price list",halfbody:"Halfbody",fullbody:"Fullbody",headshot:"Headshot",sketchSheet:"B&W sketch sheet — 2 characters",sketchSheetNote:"About 4 poses / angles.",flatTba:"Pricing will be added later",closed:"Closed",commissionsClosed:"Commissions currently closed",animationFrom:"Frame-by-frame animation",animationAsk:"Ask me for a quote.",withMyChara:"With my character (Mister Rin or Rylan)",sketch:"Sketch B&W",flat:"Flat color",render:"Full render",comic:"Comic pages",animation:"Animation",extras:"Extras & add-ons",from:"from",customFrom:"custom / from",extraAlt:"Alt version (cum, x-ray, etc.)",extraChar:"Additional character",extraBg:"Background",extraComplex:"Complex detail",extraRush:"Rush fee",tosTitle:"Terms of service",tosShow:"Read full text",tosHide:"Hide full text",tosGeneral:"General",tosGeneral1:"I only draw anthropomorphic characters.",tosGeneral2:"You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette.",tosGeneral3:"You may also provide photo references and 3D references if available.",tosPayment:"Payment",tosPayment1:"Payment is accepted via PayPal in USD.",tosPayment2:"Other payment methods may also be discussed if you are, for example, from the CIS or China.",tosPayment3:"If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones.",tosPayment4:"Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval.",tosPayment5:"Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process.",tosProcess:"Process",tosProcess1:"In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality.",tosProcess2:"I do this in every case, even if you receive updates and the finished commission through Telegram.",tosProcess3:"I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time, just tell me.",tosProcess4:"I include 2–3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character or their design are free, even after the artwork is finished, if it was genuinely my mistake.",tosProcess5:"I do not charge extra for complex character designs such as many spots or stripes because I simplify those details while keeping their placement accurate within reason.",tosDeadline:"Deadline",tosDeadline1:"Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance.",tosDeadline2:"A commission usually takes 1–2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it.",tosDeadline3:"I organize my work based on complexity, current workload and creative capacity, while aiming for the highest quality I can provide.",tosRights:"Rights",tosRights1:"Purchasing a commission does not transfer copyright ownership to you.",tosRights2:"You may publish it, post it, use it as an avatar, and use it personally as long as you do not remove my signature from the finished artwork. Cropping it for an avatar is fine.",tosRights3:"You must credit me as the artist on websites where you publish my work.",tosRights4:"You may not publish my content on paid platforms or use it as paid content unless commercial use has been agreed separately.",tosRights5:"You may not train a local AI model on my artwork or use it to replicate my style.",tosRights6:"I may use your commission for promotional purposes unless we have agreed otherwise. You can request anonymous publication or complete privacy in advance, and I do not charge extra for privacy.",tosRefunds:"Refunds",tosRefunds1:"A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately.",tosRefunds2:"Once work has begun, refunds are generally unavailable. If I am unable to complete the commission or no meaningful progress has been made, a refund may still be issued.",tosNoDrawShort:"Won\'t draw",tosNoDraw:"What will I not draw?",tosNoDraw1:"Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration.",tosNoDraw2:"Other than that, I have no taboos.",tosNoDraw3:"I will be happy to help you come up with an idea or story if you are having trouble with it.",tosNoDraw4:"I will also be happy to receive creative freedom, but first I will need to learn more about your character and their backstory.",queueHeading:"Queue & availability",currentAvailability:"Current availability",commissionQueue:"Commission queue",currentStatus:"Current status",queueNote:"Current commission order and progress are available on my Trello board.",viewTrello:"View Trello"
+        skipContent:"Skip to content",commissionMe:"Commission me",ageTitle:"Adult content",ageText:"This website may contain adult-themed artwork. By entering, you confirm that you are legally allowed to view such content in your region.",ageEnter:"Enter",ageLeave:"Leave",navPrices:"Prices",navTos:"TOS",navQueue:"Queue",heroKicker:"Commission site",heroSub:"NSFW 2D artist & animator",heroNote:"Furry only. Dark. Direct. No fluff.",viewPrices:"View prices",viewQueue:"View queue",warningBar:"18+ CONTENT WARNING",priceList:"Price list",halfbody:"Halfbody",fullbody:"Fullbody",headshot:"Headshot",sketchSheet:"Sketch sheet with two characters",sketchSheetNote:"4 poses / angles.",flatTba:"Pricing will be added later",closed:"Closed",commissionsClosed:"Commissions currently closed",animationFrom:"Frame-by-frame animation",animationAsk:"Ask me for a quote.",withMyChara:"With my character (Mister Rin or Rylan)",sketch:"Sketch B&W",flat:"Flat color",render:"Full render",renderBgNote:"* Price includes background.",comic:"Comic pages",animation:"Animation",extras:"Extras & add-ons",from:"from",customFrom:"custom / from",extraAlt:"Alt version (cum, x-ray, etc.)",extraChar:"Additional character",extraBg:"Background",extraComplex:"Complex detail",extraRush:"Rush fee",tosTitle:"Terms of service",tosShow:"Read full text",tosHide:"Hide full text",tosGeneral:"General",tosGeneral1:"I only draw anthropomorphic characters.",tosGeneral2:"You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette.",tosGeneral3:"You may also provide photo references and 3D references if available.",tosPayment:"Payment",tosPayment1:"Payment is accepted via PayPal in USD.",tosPayment2:"Other payment methods may also be discussed if you are, for example, from the CIS or China.",tosPayment3:"If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones.",tosPayment4:"Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval.",tosPayment5:"Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process.",tosProcess:"Process",tosProcess1:"In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality.",tosProcess2:"I do this in every case, even if you receive updates and the finished commission through Telegram.",tosProcess3:"I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time, just tell me.",tosProcess4:"I include 2–3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character or their design are free, even after the artwork is finished, if it was genuinely my mistake.",tosProcess5:"I do not charge extra for complex character designs such as many spots or stripes because I simplify those details while keeping their placement accurate within reason.",tosDeadline:"Deadline",tosDeadline1:"Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance.",tosDeadline2:"A commission usually takes 1–2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it.",tosDeadline3:"I organize my work based on complexity, current workload and creative capacity, while aiming for the highest quality I can provide.",tosRights:"Rights",tosRights1:"Purchasing a commission does not transfer copyright ownership to you.",tosRights2:"You may publish it, post it, use it as an avatar, and use it personally as long as you do not remove my signature from the finished artwork. Cropping it for an avatar is fine.",tosRights3:"You must credit me as the artist on websites where you publish my work.",tosRights4:"You may not publish my content on paid platforms or use it as paid content unless commercial use has been agreed separately.",tosRights5:"You may not train a local AI model on my artwork or use it to replicate my style.",tosRights6:"I may use your commission for promotional purposes unless we have agreed otherwise. You can request anonymous publication or complete privacy in advance, and I do not charge extra for privacy.",tosRefunds:"Refunds",tosRefunds1:"A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately.",tosRefunds2:"Once work has begun, refunds are generally unavailable. If I am unable to complete the commission or no meaningful progress has been made, a refund may still be issued.",tosNoDrawShort:"Won\'t draw",tosNoDraw:"What will I not draw?",tosNoDraw1:"Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration.",tosNoDraw2:"Other than that, I have no taboos.",tosNoDraw3:"I will be happy to help you come up with an idea or story if you are having trouble with it.",tosNoDraw4:"I will also be happy to receive creative freedom, but first I will need to learn more about your character and their backstory.",queueHeading:"Queue & availability",currentAvailability:"Current availability",commissionQueue:"Commission queue",currentStatus:"Current status",queueNote:"Current commission order and progress are available on my Trello board.",viewTrello:"View Trello"
       },
       ru:{
-        skipContent:"Перейти к содержимому",commissionMe:"Заказать",ageTitle:"Контент 18+",ageText:"На сайте могут находиться материалы для взрослых. Продолжая, вы подтверждаете, что имеете право просматривать такой контент в своей стране или регионе.",ageEnter:"Войти",ageLeave:"Выйти",navPrices:"Цены",navTos:"TOS",navQueue:"Очередь",heroKicker:"Комиссии",heroSub:"NSFW 2D художник и аниматор",heroNote:"Только furry. Прямо. Жестко. Без лишнего.",viewPrices:"Смотреть цены",viewQueue:"Смотреть очередь",warningBar:"18+ — на сайте могут находиться материалы для взрослых.",priceList:"Прайс-лист",halfbody:"Халфбоди",fullbody:"Фуллбоди",headshot:"Хэдшот",sketchSheet:"Ч/б скетч-лист — 2 персонажа",sketchSheetNote:"Около 4 поз / ракурсов.",flatTba:"Цена будет добавлена позже",closed:"Закрыто",commissionsClosed:"Комиссии сейчас закрыты",animationFrom:"Покадровая анимация",animationAsk:"Спрашивайте стоимость.",withMyChara:"С моим персонажем (Mister Rin или Rylan)",sketch:"Ч/б скетч",flat:"Плоский цвет",render:"Фулл рендер",comic:"Комиксы",animation:"Анимация",extras:"Дополнительно",from:"от",customFrom:"индивидуально / от",extraAlt:"Альтернативная версия (cum, x-ray и т.д.)",extraChar:"Дополнительный персонаж",extraBg:"Фон",extraComplex:"Сложные детали",extraRush:"Срочный заказ",tosTitle:"Условия работы",tosShow:"Читать полностью",tosHide:"Скрыть текст",tosGeneral:"Общее",tosGeneral1:"Я рисую только антропоморфных персонажей.",tosGeneral2:"Необходимо предоставить референс персонажа. Если его нет, понадобится подробное текстовое описание внешности и готовая визуальная палитра цветов.",tosGeneral3:"Также можно предоставить фотографии и 3D-референсы, если они есть.",tosPayment:"Оплата",tosPayment1:"Оплата принимается через PayPal в USD.",tosPayment2:"Другие способы оплаты также можно обсудить отдельно, например если вы из СНГ или Китая.",tosPayment3:"Если вы заказываете работу вместе с другом, я принимаю оплату одним инвойсом, а не двумя отдельными.",tosPayment4:"Полная оплата требуется только после того, как скетч завершен и утвержден. Я не беру оплату до предоставления скетча и вашего подтверждения.",tosPayment5:"Для заказов от $200 доступна рассрочка на два или три платежа. Финальная работа передается после последнего платежа, но WIP будут предоставляться на протяжении процесса.",tosProcess:"Процесс",tosProcess1:"Помимо Trello, после утверждения скетча вы получите ссылку на Google Drive с отдельной папкой для WIP. Туда же будет загружен исходный файл финальной работы в максимально доступном качестве.",tosProcess2:"Это делается в любом случае, даже если обновления и финальную работу вы получаете через Telegram.",tosProcess3:"Обычно я показываю относительно мало WIP и в основном основные этапы: скетч, лайн и финальную работу. Если вы хотите получать обновления чаще и почти в реальном времени, просто скажите.",tosProcess4:"В стоимость входят 2–3 бесплатные правки. Дополнительные правки оплачиваются отдельно. Ошибки в персонаже или дизайне, допущенные мной, исправляются бесплатно даже после завершения работы.",tosProcess5:"Я не беру доплату за сложный дизайн персонажа вроде большого количества пятен или полос, потому что упрощаю такие детали, стараясь при этом сохранить их расположение достаточно точно.",tosDeadline:"Сроки",tosDeadline1:"Я не работаю с жесткими дедлайнами, если они не были согласованы заранее.",tosDeadline2:"Обычно комиссия занимает 1–2 месяца в зависимости от размера очереди. Если нужен более точный ориентир, это можно обсудить отдельно.",tosDeadline3:"Я распределяю работу с учетом сложности, текущей нагрузки и творческого ресурса, стараясь выдать максимально качественный результат.",tosRights:"Права",tosRights1:"Покупка комиссии не передает вам авторские права на работу.",tosRights2:"Вы можете публиковать работу, использовать ее как аватар и использовать лично, если не удаляете мою подпись с финального изображения. Обрезать подпись при использовании в качестве аватара можно.",tosRights3:"При публикации моей работы на сайтах необходимо указывать меня как художника.",tosRights4:"Нельзя размещать мою работу на платных площадках или использовать ее как платный контент, если коммерческое использование не было согласовано отдельно.",tosRights5:"Нельзя обучать локальные AI-модели на моих работах или использовать их для копирования моего стиля.",tosRights6:"Я могу использовать вашу комиссию для продвижения, если мы не договорились иначе. Можно заранее попросить анонимную публикацию или полную приватность. Доплаты за приватность нет.",tosRefunds:"Возвраты",tosRefunds1:"Возврат возможен, если я еще не начал работу или полностью не могу завершить заказ. Способ возврата обсуждается лично.",tosRefunds2:"После начала работы возвраты обычно недоступны. Если я не могу завершить заказ или существенного прогресса не было, возврат все еще может быть произведен.",tosNoDrawShort:"Не рисую",tosNoDraw:"Что я не рисую?",tosNoDraw1:"Подгузники, бодибилдеров и чрезмерную мускулатуру, гипертрофированные гениталии, очень полных персонажей или экстремальные пропорции тела, feral-персонажей, беременность, пони, лактацию, любые трансформации и кастрацию.",tosNoDraw2:"Кроме этого, жестких табу у меня нет.",tosNoDraw3:"Если вам сложно придумать идею или историю, я с удовольствием помогу.",tosNoDraw4:"Я также рад творческой свободе, но сначала мне понадобится больше узнать о вашем персонаже и его истории.",queueHeading:"Очередь и доступность",currentAvailability:"Текущая доступность",commissionQueue:"Очередь заказов",currentStatus:"Текущий статус",queueNote:"Актуальный порядок заказов и прогресс доступны на моей Trello-доске.",viewTrello:"Открыть Trello"
+        skipContent:"Перейти к содержимому",commissionMe:"Заказать",ageTitle:"Контент 18+",ageText:"На сайте могут находиться материалы для взрослых. Продолжая, вы подтверждаете, что имеете право просматривать такой контент в своей стране или регионе.",ageEnter:"Войти",ageLeave:"Выйти",navPrices:"Цены",navTos:"TOS",navQueue:"Очередь",heroKicker:"Комиссии",heroSub:"NSFW 2D художник и аниматор",heroNote:"Только furry. Прямо. Жестко. Без лишнего.",viewPrices:"Смотреть цены",viewQueue:"Смотреть очередь",warningBar:"18+ CONTENT WARNING",priceList:"Прайс-лист",halfbody:"Халфбоди",fullbody:"Фуллбоди",headshot:"Хэдшот",sketchSheet:"Скетч-лист с двумя персонажами",sketchSheetNote:"4 позы / ракурса.",flatTba:"Цена будет добавлена позже",closed:"Закрыто",commissionsClosed:"Комиссии сейчас закрыты",animationFrom:"Покадровая анимация",animationAsk:"Спрашивайте стоимость.",withMyChara:"С моим персонажем (Mister Rin или Rylan)",sketch:"Ч/б скетч",flat:"Плоский цвет",render:"Фулл рендер",renderBgNote:"* Цена с учетом фона.",comic:"Комиксы",animation:"Анимация",extras:"Дополнительно",from:"от",customFrom:"индивидуально / от",extraAlt:"Альтернативная версия (cum, x-ray и т.д.)",extraChar:"Дополнительный персонаж",extraBg:"Фон",extraComplex:"Сложные детали",extraRush:"Срочный заказ",tosTitle:"Условия работы",tosShow:"Читать полностью",tosHide:"Скрыть текст",tosGeneral:"Общее",tosGeneral1:"Я рисую только антропоморфных персонажей.",tosGeneral2:"Необходимо предоставить референс персонажа. Если его нет, понадобится подробное текстовое описание внешности и готовая визуальная палитра цветов.",tosGeneral3:"Также можно предоставить фотографии и 3D-референсы, если они есть.",tosPayment:"Оплата",tosPayment1:"Оплата принимается через PayPal в USD.",tosPayment2:"Другие способы оплаты также можно обсудить отдельно, например если вы из СНГ или Китая.",tosPayment3:"Если вы заказываете работу вместе с другом, я принимаю оплату одним инвойсом, а не двумя отдельными.",tosPayment4:"Полная оплата требуется только после того, как скетч завершен и утвержден. Я не беру оплату до предоставления скетча и вашего подтверждения.",tosPayment5:"Для заказов от $200 доступна рассрочка на два или три платежа. Финальная работа передается после последнего платежа, но WIP будут предоставляться на протяжении процесса.",tosProcess:"Процесс",tosProcess1:"Помимо Trello, после утверждения скетча вы получите ссылку на Google Drive с отдельной папкой для WIP. Туда же будет загружен исходный файл финальной работы в максимально доступном качестве.",tosProcess2:"Это делается в любом случае, даже если обновления и финальную работу вы получаете через Telegram.",tosProcess3:"Обычно я показываю относительно мало WIP и в основном основные этапы: скетч, лайн и финальную работу. Если вы хотите получать обновления чаще и почти в реальном времени, просто скажите.",tosProcess4:"В стоимость входят 2–3 бесплатные правки. Дополнительные правки оплачиваются отдельно. Ошибки в персонаже или дизайне, допущенные мной, исправляются бесплатно даже после завершения работы.",tosProcess5:"Я не беру доплату за сложный дизайн персонажа вроде большого количества пятен или полос, потому что упрощаю такие детали, стараясь при этом сохранить их расположение достаточно точно.",tosDeadline:"Сроки",tosDeadline1:"Я не работаю с жесткими дедлайнами, если они не были согласованы заранее.",tosDeadline2:"Обычно комиссия занимает 1–2 месяца в зависимости от размера очереди. Если нужен более точный ориентир, это можно обсудить отдельно.",tosDeadline3:"Я распределяю работу с учетом сложности, текущей нагрузки и творческого ресурса, стараясь выдать максимально качественный результат.",tosRights:"Права",tosRights1:"Покупка комиссии не передает вам авторские права на работу.",tosRights2:"Вы можете публиковать работу, использовать ее как аватар и использовать лично, если не удаляете мою подпись с финального изображения. Обрезать подпись при использовании в качестве аватара можно.",tosRights3:"При публикации моей работы на сайтах необходимо указывать меня как художника.",tosRights4:"Нельзя размещать мою работу на платных площадках или использовать ее как платный контент, если коммерческое использование не было согласовано отдельно.",tosRights5:"Нельзя обучать локальные AI-модели на моих работах или использовать их для копирования моего стиля.",tosRights6:"Я могу использовать вашу комиссию для продвижения, если мы не договорились иначе. Можно заранее попросить анонимную публикацию или полную приватность. Доплаты за приватность нет.",tosRefunds:"Возвраты",tosRefunds1:"Возврат возможен, если я еще не начал работу или полностью не могу завершить заказ. Способ возврата обсуждается лично.",tosRefunds2:"После начала работы возвраты обычно недоступны. Если я не могу завершить заказ или существенного прогресса не было, возврат все еще может быть произведен.",tosNoDrawShort:"Не рисую",tosNoDraw:"Что я не рисую?",tosNoDraw1:"Подгузники, бодибилдеров и чрезмерную мускулатуру, гипертрофированные гениталии, очень полных персонажей или экстремальные пропорции тела, feral-персонажей, беременность, пони, лактацию, любые трансформации и кастрацию.",tosNoDraw2:"Кроме этого, жестких табу у меня нет.",tosNoDraw3:"Если вам сложно придумать идею или историю, я с удовольствием помогу.",tosNoDraw4:"Я также рад творческой свободе, но сначала мне понадобится больше узнать о вашем персонаже и его истории.",queueHeading:"Очередь и доступность",currentAvailability:"Текущая доступность",commissionQueue:"Очередь заказов",currentStatus:"Текущий статус",queueNote:"Актуальный порядок заказов и прогресс доступны на моей Trello-доске.",viewTrello:"Открыть Trello"
       }
     };
 
