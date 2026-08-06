@@ -72,6 +72,601 @@
     .social-link.primary:hover::after{border-color:rgba(229,162,59,.62)}
     @media(max-width:640px){.tos-document{font-size:15px;line-height:1.8}.social-dock{height:64px}.social-dock.auto-hidden{transform:translateY(calc(100% - 3px))}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal,.stagger>*{opacity:1!important;transform:none!important}.hero-mascot{animation:none}}
+  
+    /* ==========================================================
+       MOCKUP PASS — top social rail + compact hero + embedded queue
+       ========================================================== */
+
+    :root{
+      --dock-h:0px;
+    }
+
+    body{
+      padding-bottom:0 !important;
+    }
+
+    /* ---------- sticky top bar ---------- */
+    .nav-inner{
+      position:relative;
+      min-height:54px;
+      gap:18px;
+    }
+
+    .brand{
+      display:none !important;
+    }
+
+    .nav-socials{
+      display:flex;
+      align-items:center;
+      margin-right:auto;
+      height:54px;
+    }
+
+    .nav-social-link{
+      position:relative;
+      width:52px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      color:#bd791e;
+      text-decoration:none;
+      border-left:1px solid rgba(124,46,42,.16);
+      transition:
+        color .26s ease,
+        background .26s ease,
+        transform .28s var(--ease);
+    }
+
+    .nav-social-link:last-child{
+      border-right:1px solid rgba(124,46,42,.16);
+    }
+
+    .nav-social-link:hover,
+    .nav-social-link:focus-visible{
+      color:var(--gold-hi);
+      background:rgba(89,31,24,.16);
+      transform:translateY(-1px);
+    }
+
+    .nav-social-link.primary{
+      color:var(--gold-hi);
+      background:linear-gradient(180deg,rgba(94,38,23,.15),rgba(40,16,15,.14));
+    }
+
+    .nav-social-icon{
+      width:23px;
+      height:23px;
+      display:block;
+    }
+
+    .nav-social-icon svg{
+      width:100%;
+      height:100%;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.65;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .nav-social-icon.fa-paw{
+      width:25px;
+      height:25px;
+    }
+
+    .nav-social-icon.fa-paw svg{
+      fill:currentColor;
+      stroke:none;
+    }
+
+    .nav-x-icon{
+      font:500 24px/1 Arial,sans-serif;
+    }
+
+    /* desktop hover labels */
+    .nav-social-link::after{
+      content:attr(data-tooltip);
+      position:absolute;
+      z-index:150;
+      top:calc(100% + 9px);
+      left:50%;
+      transform:translate(-50%,-5px);
+      padding:7px 9px;
+      border:1px solid rgba(132,52,42,.48);
+      background:rgba(10,7,7,.97);
+      color:#cba38e;
+      white-space:nowrap;
+      pointer-events:none;
+      opacity:0;
+      visibility:hidden;
+      font:600 11px/1 "Barlow Condensed",sans-serif;
+      letter-spacing:.075em;
+      text-transform:uppercase;
+      box-shadow:0 10px 28px rgba(0,0,0,.34);
+      transition:opacity .2s ease,transform .22s var(--ease),visibility .2s;
+    }
+
+    .nav-social-link:hover::after,
+    .nav-social-link:focus-visible::after{
+      opacity:1;
+      visibility:visible;
+      transform:translate(-50%,0);
+    }
+
+    .nav-links{
+      margin-left:auto;
+      gap:clamp(25px,3vw,42px);
+    }
+
+    .nav-links a{
+      min-height:54px;
+      font-size:14px;
+    }
+
+    .lang-toggle{
+      flex:0 0 86px;
+      width:86px;
+      height:34px;
+      margin-left:2px;
+    }
+
+    .lang-toggle .lang-indicator{
+      inset:3px auto 3px 3px;
+      width:calc(50% - 3px);
+    }
+
+    /* ---------- hero ---------- */
+    .hero{
+      min-height:424px !important;
+      display:grid;
+      background:
+        radial-gradient(circle at 15% 36%,rgba(57,21,20,.16),transparent 26rem),
+        linear-gradient(180deg,#090707,#080606);
+      isolation:isolate;
+    }
+
+    .hero-media{
+      display:none !important;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      z-index:0;
+      inset:0;
+      pointer-events:none;
+      opacity:.28;
+      background:
+        linear-gradient(90deg,transparent 0 35%,rgba(45,14,16,.12) 48%,transparent 60%),
+        radial-gradient(circle at 58% 78%,rgba(81,24,24,.12),transparent 27rem);
+    }
+
+    .hero-burgundy-plane{
+      position:absolute;
+      z-index:1;
+      right:-5%;
+      top:0;
+      width:55%;
+      height:100%;
+      background:
+        linear-gradient(150deg,rgba(111,39,38,.95),rgba(71,24,25,.96));
+      clip-path:polygon(27% 0,100% 0,100% 100%,0 100%);
+      box-shadow:-18px 0 55px rgba(0,0,0,.18);
+      pointer-events:none;
+    }
+
+    .hero-burgundy-plane::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.07;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+    }
+
+    .hero-burgundy-plane.second{
+      z-index:0;
+      right:17%;
+      top:-8%;
+      width:18%;
+      height:76%;
+      opacity:.28;
+      background:#421619;
+      clip-path:polygon(70% 0,100% 0,38% 100%,0 100%);
+      transform:translateX(-28px);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:4;
+      min-height:424px;
+      grid-template-columns:minmax(360px,.85fr) minmax(480px,1.15fr);
+      align-items:center;
+      gap:clamp(16px,3vw,42px);
+      padding:40px 0 0 !important;
+    }
+
+    .hero-text{
+      position:relative;
+      z-index:5;
+      align-items:flex-start;
+      justify-content:center;
+      padding-bottom:34px;
+    }
+
+    .hero-title{
+      font-size:clamp(72px,8vw,104px) !important;
+      line-height:.84;
+      letter-spacing:.02em;
+      color:#d1a397;
+      text-shadow:
+        0 8px 34px rgba(0,0,0,.52),
+        0 0 28px rgba(118,42,37,.10);
+    }
+
+    .hero-sub{
+      margin-top:20px;
+      font-size:clamp(21px,2.1vw,26px);
+      color:#b66e66;
+    }
+
+    .hero-kicker,
+    .hero-note,
+    .hero-actions{
+      display:none !important;
+    }
+
+    .hero-mascot-wrap{
+      position:relative;
+      z-index:4;
+      align-self:end;
+      justify-self:end;
+      width:min(100%,690px);
+      min-height:360px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-end;
+      isolation:isolate;
+    }
+
+    .hero-mascot-shadow{
+      position:absolute;
+      z-index:-1;
+      left:9%;
+      right:1%;
+      bottom:0;
+      height:34%;
+      background:radial-gradient(ellipse at center,rgba(0,0,0,.58),transparent 72%);
+      filter:blur(15px);
+    }
+
+    .hero-mascot{
+      width:min(100%,690px) !important;
+      height:auto !important;
+      object-fit:contain;
+      object-position:right bottom;
+      margin:0 !important;
+      filter:
+        saturate(.88)
+        brightness(.93)
+        contrast(1.025)
+        drop-shadow(0 19px 35px rgba(0,0,0,.54))
+        drop-shadow(0 0 20px rgba(104,31,31,.14));
+      animation:mascotFloat 8s ease-in-out infinite alternate !important;
+      transform-origin:60% 100%;
+    }
+
+    @keyframes mascotFloat{
+      from{transform:translate3d(0,5px,0)}
+      to{transform:translate3d(0,-3px,0)}
+    }
+
+    /* ---------- hero queue telemetry ---------- */
+    .hero-queue{
+      margin-top:22px;
+      width:min(100%,430px);
+      min-height:84px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:center;
+      gap:14px;
+      padding:12px 14px 12px 14px;
+      border-top:1px solid rgba(126,47,42,.34);
+      border-bottom:1px solid rgba(126,47,42,.34);
+      background:
+        linear-gradient(90deg,rgba(42,15,16,.54),rgba(18,9,10,.16));
+      box-shadow:inset 0 1px rgba(255,255,255,.012);
+      scroll-margin-top:calc(var(--nav-h) + 20px);
+    }
+
+    .hero-queue-copy{
+      min-width:0;
+    }
+
+    .hero-queue-kicker{
+      display:block;
+      margin-bottom:6px;
+      color:#7d625b;
+      text-transform:uppercase;
+      font:600 10px/1 "Barlow Condensed",sans-serif;
+      letter-spacing:.13em;
+    }
+
+    .hero-queue-line{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:8px 10px;
+    }
+
+    .hero-queue-title{
+      color:var(--gold);
+      text-transform:uppercase;
+      font:600 18px/1 "Barlow Condensed",sans-serif;
+      letter-spacing:.09em;
+    }
+
+    .queue-status{
+      font-size:19px;
+    }
+
+    .queue-status::before{
+      width:8px;
+      height:8px;
+    }
+
+    .hero-queue-btn{
+      min-width:124px;
+      min-height:42px;
+      padding-inline:17px;
+      font-size:13px;
+    }
+
+    /* Price list is pulled close to hero like the mockup */
+    #prices{
+      padding-top:50px;
+    }
+
+    /* fix real mobile overflow on long section headings */
+    .section-head{
+      min-width:0;
+    }
+
+    .section-head h2{
+      flex:1 1 auto !important;
+      min-width:0;
+      max-width:100%;
+      white-space:normal;
+      overflow-wrap:anywhere;
+    }
+
+    /* Extras is intentionally a service panel, but align it with row rhythm */
+    .extras-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:100%;
+      padding:25px 18px 18px;
+      background:
+        linear-gradient(180deg,rgba(37,14,15,.34),rgba(14,8,9,.13));
+      border:1px solid rgba(113,41,38,.26);
+    }
+
+    .extras-card .price-meta{
+      margin-bottom:18px;
+    }
+
+    /* no lower dock */
+    .social-dock{
+      display:none !important;
+    }
+
+    footer{
+      padding-bottom:22px;
+    }
+
+    @media(max-width:900px){
+      .nav-inner{
+        min-height:62px;
+      }
+
+      .nav-socials{
+        height:62px;
+      }
+
+      .nav-social-link{
+        width:44px;
+        height:44px;
+      }
+
+      .nav-social-link::after{
+        display:none;
+      }
+
+      .nav-links{
+        top:62px !important;
+        grid-template-columns:1fr !important;
+        padding:10px 18px 16px !important;
+      }
+
+      .nav-links a{
+        min-height:50px;
+      }
+
+      .nav-links .lang-toggle{
+        width:100%;
+        max-width:180px;
+        height:42px;
+        margin:12px auto 3px;
+      }
+
+      .mobile-menu-btn{
+        display:grid;
+        place-items:center;
+        margin-left:auto;
+      }
+
+      .hero{
+        min-height:600px !important;
+      }
+
+      .hero-burgundy-plane{
+        width:78%;
+        height:60%;
+        top:auto;
+        bottom:0;
+        right:-18%;
+        clip-path:polygon(26% 0,100% 0,100% 100%,0 100%);
+      }
+
+      .hero-burgundy-plane.second{
+        display:none;
+      }
+
+      .hero-content{
+        min-height:600px;
+        grid-template-columns:1fr !important;
+        align-content:end;
+        gap:0;
+        padding:64px 0 0 !important;
+        text-align:left !important;
+      }
+
+      .hero-text{
+        align-items:flex-start !important;
+        padding-bottom:0;
+      }
+
+      .hero-title{
+        font-size:clamp(58px,14vw,86px) !important;
+      }
+
+      .hero-sub{
+        font-size:21px;
+      }
+
+      .hero-queue{
+        width:min(100%,440px);
+      }
+
+      .hero-mascot-wrap{
+        width:min(720px,96vw);
+        min-height:255px;
+        margin-top:-18px;
+        justify-self:center;
+      }
+
+      .hero-mascot{
+        width:min(720px,96vw) !important;
+      }
+    }
+
+    @media(max-width:640px){
+      :root{
+        --nav-h:62px;
+      }
+
+      .shell{
+        width:min(var(--page),calc(100% - 24px));
+      }
+
+      .nav-social-link{
+        width:40px;
+      }
+
+      .nav-social-icon{
+        width:21px;
+        height:21px;
+      }
+
+      .nav-social-icon.fa-paw{
+        width:23px;
+        height:23px;
+      }
+
+      .nav-x-icon{
+        font-size:22px;
+      }
+
+      .nav-social-link:nth-child(5){
+        display:none;
+      }
+
+      .hero{
+        min-height:575px !important;
+      }
+
+      .hero-content{
+        min-height:575px;
+        padding-top:48px !important;
+      }
+
+      .hero-title{
+        font-size:clamp(54px,16vw,74px) !important;
+      }
+
+      .hero-sub{
+        margin-top:16px;
+        font-size:19px;
+      }
+
+      .hero-queue{
+        grid-template-columns:1fr auto;
+        gap:9px;
+        padding:11px 10px;
+      }
+
+      .hero-queue-title{
+        font-size:16px;
+      }
+
+      .queue-status{
+        font-size:16px;
+      }
+
+      .hero-queue-btn{
+        min-width:104px;
+        padding-inline:11px;
+        font-size:12px;
+      }
+
+      .hero-mascot-wrap{
+        min-height:226px;
+        width:108vw;
+        margin-left:-7vw;
+        margin-top:-2px;
+      }
+
+      .hero-mascot{
+        width:108vw !important;
+        max-width:none !important;
+      }
+
+      .content-warning{
+        font-size:9px;
+        letter-spacing:.055em;
+      }
+
+      #prices{
+        padding-top:42px;
+      }
+
+      .section-head h2{
+        font-size:clamp(25px,9vw,30px) !important;
+        line-height:1.05;
+        letter-spacing:.065em;
+      }
+
+      .section-head::after{
+        min-width:20px;
+      }
+
+      .extras-card{
+        min-height:260px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -95,29 +690,105 @@
 
   <nav class="site-nav" id="siteNav">
     <div class="shell nav-inner">
-      <a class="brand" href="#top">MR.<span>RIN</span></a>
+      <div class="nav-socials" aria-label="Social links">
+        <a class="nav-social-link" href="#" data-link="fa" target="_blank" rel="noopener noreferrer"
+           aria-label="FurAffinity" data-tooltip="FurAffinity">
+          <span class="nav-social-icon fa-paw" aria-hidden="true">
+            <svg viewBox="0 0 64 64">
+              <ellipse cx="32" cy="42" rx="15" ry="12"/>
+              <ellipse cx="14.5" cy="27" rx="7" ry="9" transform="rotate(-24 14.5 27)"/>
+              <ellipse cx="27" cy="18" rx="6.5" ry="9" transform="rotate(-8 27 18)"/>
+              <ellipse cx="41" cy="18.5" rx="6.5" ry="9" transform="rotate(8 41 18.5)"/>
+              <ellipse cx="52" cy="28" rx="7" ry="9" transform="rotate(24 52 28)"/>
+            </svg>
+          </span>
+        </a>
+
+        <a class="nav-social-link" href="#" data-link="x" target="_blank" rel="noopener noreferrer"
+           aria-label="Twitter" data-tooltip="Twitter">
+          <span class="nav-x-icon" aria-hidden="true">𝕏</span>
+        </a>
+
+        <a class="nav-social-link" href="#" data-link="telegramChannel" target="_blank" rel="noopener noreferrer"
+           aria-label="Telegram Channel" data-tooltip="Telegram Channel">
+          <span class="nav-social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 3 10.2 13.8"></path>
+              <path d="m21 3-6.8 18-4-7.2L3 9.8 21 3z"></path>
+            </svg>
+          </span>
+        </a>
+
+        <a class="nav-social-link primary" href="#" data-link="telegramDm" target="_blank" rel="noopener noreferrer"
+           aria-label="Telegram DM" data-tooltip="Telegram DM">
+          <span class="nav-social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4.5 21c.8-4.2 3.4-6.4 7.5-6.4s6.7 2.2 7.5 6.4"></path>
+            </svg>
+          </span>
+        </a>
+
+        <a class="nav-social-link" href="#" data-link="trello" target="_blank" rel="noopener noreferrer"
+           aria-label="Trello" data-tooltip="Trello">
+          <span class="nav-social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <rect x="6.5" y="6.5" width="4" height="10"></rect>
+              <rect x="13.5" y="6.5" width="4" height="7"></rect>
+            </svg>
+          </span>
+        </a>
+      </div>
+
       <div class="nav-links" id="navLinks">
         <a href="#prices" data-i18n="navPrices">Prices</a>
         <a href="#tos" data-i18n="navTos">TOS</a>
         <a href="#queue" data-i18n="navQueue">Queue</a>
+
+        <button class="lang-toggle" id="langToggle" type="button" data-lang="en" aria-label="Change language">
+          <span class="lang-indicator" aria-hidden="true"></span>
+          <span class="label-en">EN</span>
+          <span class="label-ru">RU</span>
+        </button>
       </div>
-      <button class="lang-toggle" id="langToggle" type="button" data-lang="en" aria-label="Change language"><span class="lang-indicator" aria-hidden="true"></span><span class="label-en">EN</span><span class="label-ru">RU</span></button>
+
       <button class="mobile-menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
   </nav>
 
   <main id="top">
     <section class="hero" id="home">
-      <div class="hero-media"><img class="hero-img" src="assets/hero.jpg" alt="MR.RIN portfolio hero artwork" width="1600" height="1000" fetchpriority="high" decoding="async" onerror="this.style.opacity='.10';this.removeAttribute('src');"></div>
+      <div class="hero-burgundy-plane" aria-hidden="true"></div>
+      <div class="hero-burgundy-plane second" aria-hidden="true"></div>
+
       <div class="shell hero-content">
         <div class="hero-text">
-          <p class="hero-kicker reveal" data-i18n="heroKicker">Commission site</p>
           <h1 class="hero-title reveal">MR.RIN</h1>
           <p class="hero-sub reveal" data-i18n="heroSub">NSFW 2D artist & animator</p>
-          <p class="hero-note reveal" data-i18n="heroNote">Furry only. Dark. Direct. No fluff.</p>
-          <div class="hero-actions reveal"><a class="btn" href="#prices" data-i18n="viewPrices">View prices</a><a class="btn" href="#" data-link="telegramDm" data-i18n="commissionMe">Commission me</a></div>
+
+          <div class="hero-queue reveal" id="queue">
+            <div class="hero-queue-copy">
+              <span class="hero-queue-kicker" data-i18n="currentAvailability">Current availability</span>
+              <div class="hero-queue-line">
+                <span class="hero-queue-title" data-i18n="commissionQueue">Commission queue</span>
+                <span class="queue-status open" id="queueStatus" data-status="open">OPEN</span>
+              </div>
+            </div>
+
+            <a class="btn hero-queue-btn" href="#" data-link="trello" target="_blank"
+               rel="noopener noreferrer" data-i18n="viewTrello">View Trello</a>
+          </div>
         </div>
-        <img class="hero-mascot reveal" src="assets/mascot.png" alt="MR.RIN mascot" width="400" height="877" loading="eager" decoding="async" onerror="this.style.display='none'">
+
+        <div class="hero-mascot-wrap reveal" aria-label="MR.RIN mascots">
+          <span class="hero-mascot-shadow" aria-hidden="true"></span>
+          <img class="hero-mascot" src="assets/mascot.png"
+               alt="MR.RIN mascot characters"
+               width="877" height="400"
+               loading="eager" decoding="async"
+               onerror="this.style.display='none'">
+        </div>
       </div>
     </section>
     <div class="content-warning" data-i18n="warningBar">18+ CONTENT WARNING — adult-themed artwork may be present on this website.</div>
@@ -148,7 +819,7 @@
               <a href="#tos-deadline" data-i18n="tosDeadline">Deadline</a>
               <a href="#tos-rights" data-i18n="tosRights">Rights</a>
               <a href="#tos-refunds" data-i18n="tosRefunds">Refunds</a>
-              <a href="#tos-no-draw" data-i18n="tosNoDraw">Won't draw</a>
+              <a href="#tos-no-draw" data-i18n="tosNoDrawShort">Won't draw</a>
             </nav>
             <h3 id="tos-general" data-i18n="tosGeneral">General</h3>
             <p data-i18n="tosGeneral1">I only draw anthropomorphic characters.</p>
@@ -190,25 +861,8 @@
       </div>
     </section>
 
-    <section class="section" id="queue">
-      <div class="shell">
-        <div class="section-head reveal"><h2 data-i18n="queueHeading">Queue & availability</h2></div>
-        <div class="queue-wrap"><div class="queue-card reveal">
-          <div class="queue-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8"></path><path d="M9 2h6v4H9z"></path><path d="M6 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1"></path><path d="M7 10h10"></path><path d="M7 14h10"></path><path d="M7 18h7"></path></svg></div>
-          <div><div class="queue-topline"><span class="queue-label" data-i18n="currentStatus">Current status</span><span class="queue-status open" id="queueStatus" data-status="open">OPEN</span></div><div class="queue-note" data-i18n="queueNote">Current commission order and progress are available on my Trello board.</div></div>
-          <a class="btn queue-btn" href="#" data-link="trello" target="_blank" rel="noopener noreferrer" data-i18n="viewTrello">View Trello</a>
-        </div></div>
-      </div>
-    </section>
   </main>
 
-  <div class="social-dock" id="socialDock" aria-label="Social links">
-    <a class="social-link" href="#" data-link="fa" target="_blank" rel="noopener noreferrer" aria-label="FurAffinity"><span class="social-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><circle cx="12" cy="9" r="2"/><circle cx="8" cy="13" r="1.5"/><circle cx="16" cy="13" r="1.5"/><circle cx="12" cy="17" r="1.5"/></svg></span><span>FurAffinity</span></a>
-    <a class="social-link" href="#" data-link="x" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><span class="x-icon">𝕏</span><span>TWITTER</span></a>
-    <a class="social-link" href="#" data-link="telegramChannel" target="_blank" rel="noopener noreferrer" aria-label="Telegram Channel"><span class="social-svg"><svg viewBox="0 0 24 24"><path d="M21 3 10.2 13.8"></path><path d="m21 3-6.8 18-4-7.2L3 9.8 21 3z"></path></svg></span><span>Telegram Channel</span></a>
-    <a class="social-link primary" href="#" data-link="telegramDm" target="_blank" rel="noopener noreferrer" aria-label="Telegram DM"><span class="social-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 21c.8-4.2 3.4-6.4 7.5-6.4s6.7 2.2 7.5 6.4"></path></svg></span><span>Telegram DM</span></a>
-    <a class="social-link" href="#" data-link="trello" target="_blank" rel="noopener noreferrer" aria-label="Trello"><span class="social-svg"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><rect x="6.5" y="6.5" width="4" height="10"></rect><rect x="13.5" y="6.5" width="4" height="7"></rect></svg></span><span>Trello</span></a>
-  </div>
 
   <footer><div class="shell">© <span id="year"></span> MR.RIN</div></footer>
 
@@ -226,14 +880,14 @@
     };
     const i18n={
       en:{
-        skipContent:"Skip to content",commissionMe:"Commission me",ageTitle:"Adult content",ageText:"This website may contain adult-themed artwork. By entering, you confirm that you are legally allowed to view such content in your region.",ageEnter:"Enter",ageLeave:"Leave",navPrices:"Prices",navTos:"TOS",navQueue:"Queue",heroKicker:"Commission site",heroSub:"NSFW 2D artist & animator",heroNote:"Furry only. Dark. Direct. No fluff.",viewPrices:"View prices",viewQueue:"View queue",warningBar:"18+ CONTENT WARNING — adult-themed artwork may be present on this website.",priceList:"Price list",sketch:"Sketch B&W",flat:"Flat color",render:"Full render",comic:"Comic pages",animation:"Animation",extras:"Extras & add-ons",from:"from",customFrom:"custom / from",extraAlt:"Alt version",extraChar:"Extra character",extraBg:"Background",extraComplex:"Complex detail",extraRush:"Rush fee",tosTitle:"Terms of service",tosShow:"Read full text",tosHide:"Hide full text",tosGeneral:"General",tosGeneral1:"I only draw anthropomorphic characters.",tosGeneral2:"You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette.",tosGeneral3:"You may also provide photo references and 3D references if available.",tosPayment:"Payment",tosPayment1:"Payment is accepted via PayPal in USD.",tosPayment2:"Other payment methods may also be discussed if you are, for example, from the CIS or China.",tosPayment3:"If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones.",tosPayment4:"Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval.",tosPayment5:"Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process.",tosProcess:"Process",tosProcess1:"In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality.",tosProcess2:"I do this in every case, even if you receive updates and the finished commission through Telegram.",tosProcess3:"I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time, just tell me.",tosProcess4:"I include 2–3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character or their design are free, even after the artwork is finished, if it was genuinely my mistake.",tosProcess5:"I do not charge extra for complex character designs such as many spots or stripes because I simplify those details while keeping their placement accurate within reason.",tosDeadline:"Deadline",tosDeadline1:"Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance.",tosDeadline2:"A commission usually takes 1–2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it.",tosDeadline3:"I organize my work based on complexity, current workload and creative capacity, while aiming for the highest quality I can provide.",tosRights:"Rights",tosRights1:"Purchasing a commission does not transfer copyright ownership to you.",tosRights2:"You may publish it, post it, use it as an avatar, and use it personally as long as you do not remove my signature from the finished artwork. Cropping it for an avatar is fine.",tosRights3:"You must credit me as the artist on websites where you publish my work.",tosRights4:"You may not publish my content on paid platforms or use it as paid content unless commercial use has been agreed separately.",tosRights5:"You may not train a local AI model on my artwork or use it to replicate my style.",tosRights6:"I may use your commission for promotional purposes unless we have agreed otherwise. You can request anonymous publication or complete privacy in advance, and I do not charge extra for privacy.",tosRefunds:"Refunds",tosRefunds1:"A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately.",tosRefunds2:"Once work has begun, refunds are generally unavailable. If I am unable to complete the commission or no meaningful progress has been made, a refund may still be issued.",tosNoDraw:"What will I not draw?",tosNoDraw1:"Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration.",tosNoDraw2:"Other than that, I have no taboos.",tosNoDraw3:"I will be happy to help you come up with an idea or story if you are having trouble with it.",tosNoDraw4:"I will also be happy to receive creative freedom, but first I will need to learn more about your character and their backstory.",queueHeading:"Queue & availability",currentStatus:"Current status",queueNote:"Current commission order and progress are available on my Trello board.",viewTrello:"View Trello"
+        skipContent:"Skip to content",commissionMe:"Commission me",ageTitle:"Adult content",ageText:"This website may contain adult-themed artwork. By entering, you confirm that you are legally allowed to view such content in your region.",ageEnter:"Enter",ageLeave:"Leave",navPrices:"Prices",navTos:"TOS",navQueue:"Queue",heroKicker:"Commission site",heroSub:"NSFW 2D artist & animator",heroNote:"Furry only. Dark. Direct. No fluff.",viewPrices:"View prices",viewQueue:"View queue",warningBar:"18+ CONTENT WARNING — adult-themed artwork may be present on this website.",priceList:"Price list",sketch:"Sketch B&W",flat:"Flat color",render:"Full render",comic:"Comic pages",animation:"Animation",extras:"Extras & add-ons",from:"from",customFrom:"custom / from",extraAlt:"Alt version",extraChar:"Extra character",extraBg:"Background",extraComplex:"Complex detail",extraRush:"Rush fee",tosTitle:"Terms of service",tosShow:"Read full text",tosHide:"Hide full text",tosGeneral:"General",tosGeneral1:"I only draw anthropomorphic characters.",tosGeneral2:"You must provide a reference sheet for your character. If you do not have one, you must give me a detailed written description of their appearance along with a finished visual color palette.",tosGeneral3:"You may also provide photo references and 3D references if available.",tosPayment:"Payment",tosPayment1:"Payment is accepted via PayPal in USD.",tosPayment2:"Other payment methods may also be discussed if you are, for example, from the CIS or China.",tosPayment3:"If you are commissioning me together with a friend, please note that I only accept payment through a single invoice, not two separate ones.",tosPayment4:"Full payment is only required after the sketch is finished and approved. I do not accept payment before providing a sketch and receiving your approval.",tosPayment5:"Payment plans are available for orders of $200 or more and can be split into two or three payments. You will receive the finished artwork only after the final payment, but WIPs will be provided throughout the process.",tosProcess:"Process",tosProcess1:"In addition to Trello, after the sketch is approved, you will receive a Google Drive link for your commission. It will contain a separate folder for WIPs, and the source file of the finished commission will also be uploaded there in the highest available quality.",tosProcess2:"I do this in every case, even if you receive updates and the finished commission through Telegram.",tosProcess3:"I usually share relatively few WIPs because of my perfectionism, mostly showing the main stages: sketch, lineart, and finished artwork. However, if you would like to receive WIPs more often and in real time, just tell me.",tosProcess4:"I include 2–3 revisions for free. Any additional revisions will cost extra. Corrections involving mistakes in the character or their design are free, even after the artwork is finished, if it was genuinely my mistake.",tosProcess5:"I do not charge extra for complex character designs such as many spots or stripes because I simplify those details while keeping their placement accurate within reason.",tosDeadline:"Deadline",tosDeadline1:"Since I am more of a creator than a craftsman, I do not work with strict deadlines unless one has been discussed in advance.",tosDeadline2:"A commission usually takes 1–2 months depending on the size of my queue, but if you need a more specific estimate, we can discuss it.",tosDeadline3:"I organize my work based on complexity, current workload and creative capacity, while aiming for the highest quality I can provide.",tosRights:"Rights",tosRights1:"Purchasing a commission does not transfer copyright ownership to you.",tosRights2:"You may publish it, post it, use it as an avatar, and use it personally as long as you do not remove my signature from the finished artwork. Cropping it for an avatar is fine.",tosRights3:"You must credit me as the artist on websites where you publish my work.",tosRights4:"You may not publish my content on paid platforms or use it as paid content unless commercial use has been agreed separately.",tosRights5:"You may not train a local AI model on my artwork or use it to replicate my style.",tosRights6:"I may use your commission for promotional purposes unless we have agreed otherwise. You can request anonymous publication or complete privacy in advance, and I do not charge extra for privacy.",tosRefunds:"Refunds",tosRefunds1:"A refund is possible if I have not started your commission or if I am completely unable to complete it. The most convenient refund method will be discussed privately.",tosRefunds2:"Once work has begun, refunds are generally unavailable. If I am unable to complete the commission or no meaningful progress has been made, a refund may still be issued.",tosNoDrawShort:"Won\'t draw",tosNoDraw:"What will I not draw?",tosNoDraw1:"Diapers, muscles or bodybuilders, hyper genitalia, fat characters or characters with extreme body proportions, feral characters, pregnancy, ponies, lactation, any kind of transformation, or castration.",tosNoDraw2:"Other than that, I have no taboos.",tosNoDraw3:"I will be happy to help you come up with an idea or story if you are having trouble with it.",tosNoDraw4:"I will also be happy to receive creative freedom, but first I will need to learn more about your character and their backstory.",queueHeading:"Queue & availability",currentAvailability:"Current availability",commissionQueue:"Commission queue",currentStatus:"Current status",queueNote:"Current commission order and progress are available on my Trello board.",viewTrello:"View Trello"
       },
       ru:{
-        skipContent:"Перейти к содержимому",commissionMe:"Заказать",ageTitle:"Контент 18+",ageText:"На сайте могут находиться материалы для взрослых. Продолжая, вы подтверждаете, что имеете право просматривать такой контент в своей стране или регионе.",ageEnter:"Войти",ageLeave:"Выйти",navPrices:"Цены",navTos:"TOS",navQueue:"Очередь",heroKicker:"Комиссии",heroSub:"NSFW 2D художник и аниматор",heroNote:"Только furry. Прямо. Жестко. Без лишнего.",viewPrices:"Смотреть цены",viewQueue:"Смотреть очередь",warningBar:"18+ — на сайте могут находиться материалы для взрослых.",priceList:"Прайс-лист",sketch:"Ч/б скетч",flat:"Плоский цвет",render:"Фулл рендер",comic:"Комиксы",animation:"Анимация",extras:"Дополнительно",from:"от",customFrom:"индивидуально / от",extraAlt:"Альтернативная версия",extraChar:"Доп. персонаж",extraBg:"Фон",extraComplex:"Сложные детали",extraRush:"Срочный заказ",tosTitle:"Условия работы",tosShow:"Читать полностью",tosHide:"Скрыть текст",tosGeneral:"Общее",tosGeneral1:"Я рисую только антропоморфных персонажей.",tosGeneral2:"Необходимо предоставить референс персонажа. Если его нет, понадобится подробное текстовое описание внешности и готовая визуальная палитра цветов.",tosGeneral3:"Также можно предоставить фотографии и 3D-референсы, если они есть.",tosPayment:"Оплата",tosPayment1:"Оплата принимается через PayPal в USD.",tosPayment2:"Другие способы оплаты также можно обсудить отдельно, например если вы из СНГ или Китая.",tosPayment3:"Если вы заказываете работу вместе с другом, я принимаю оплату одним инвойсом, а не двумя отдельными.",tosPayment4:"Полная оплата требуется только после того, как скетч завершен и утвержден. Я не беру оплату до предоставления скетча и вашего подтверждения.",tosPayment5:"Для заказов от $200 доступна рассрочка на два или три платежа. Финальная работа передается после последнего платежа, но WIP будут предоставляться на протяжении процесса.",tosProcess:"Процесс",tosProcess1:"Помимо Trello, после утверждения скетча вы получите ссылку на Google Drive с отдельной папкой для WIP. Туда же будет загружен исходный файл финальной работы в максимально доступном качестве.",tosProcess2:"Это делается в любом случае, даже если обновления и финальную работу вы получаете через Telegram.",tosProcess3:"Обычно я показываю относительно мало WIP и в основном основные этапы: скетч, лайн и финальную работу. Если вы хотите получать обновления чаще и почти в реальном времени, просто скажите.",tosProcess4:"В стоимость входят 2–3 бесплатные правки. Дополнительные правки оплачиваются отдельно. Ошибки в персонаже или дизайне, допущенные мной, исправляются бесплатно даже после завершения работы.",tosProcess5:"Я не беру доплату за сложный дизайн персонажа вроде большого количества пятен или полос, потому что упрощаю такие детали, стараясь при этом сохранить их расположение достаточно точно.",tosDeadline:"Сроки",tosDeadline1:"Я не работаю с жесткими дедлайнами, если они не были согласованы заранее.",tosDeadline2:"Обычно комиссия занимает 1–2 месяца в зависимости от размера очереди. Если нужен более точный ориентир, это можно обсудить отдельно.",tosDeadline3:"Я распределяю работу с учетом сложности, текущей нагрузки и творческого ресурса, стараясь выдать максимально качественный результат.",tosRights:"Права",tosRights1:"Покупка комиссии не передает вам авторские права на работу.",tosRights2:"Вы можете публиковать работу, использовать ее как аватар и использовать лично, если не удаляете мою подпись с финального изображения. Обрезать подпись при использовании в качестве аватара можно.",tosRights3:"При публикации моей работы на сайтах необходимо указывать меня как художника.",tosRights4:"Нельзя размещать мою работу на платных площадках или использовать ее как платный контент, если коммерческое использование не было согласовано отдельно.",tosRights5:"Нельзя обучать локальные AI-модели на моих работах или использовать их для копирования моего стиля.",tosRights6:"Я могу использовать вашу комиссию для продвижения, если мы не договорились иначе. Можно заранее попросить анонимную публикацию или полную приватность. Доплаты за приватность нет.",tosRefunds:"Возвраты",tosRefunds1:"Возврат возможен, если я еще не начал работу или полностью не могу завершить заказ. Способ возврата обсуждается лично.",tosRefunds2:"После начала работы возвраты обычно недоступны. Если я не могу завершить заказ или существенного прогресса не было, возврат все еще может быть произведен.",tosNoDraw:"Что я не рисую?",tosNoDraw1:"Подгузники, бодибилдеров и чрезмерную мускулатуру, гипертрофированные гениталии, очень полных персонажей или экстремальные пропорции тела, feral-персонажей, беременность, пони, лактацию, любые трансформации и кастрацию.",tosNoDraw2:"Кроме этого, жестких табу у меня нет.",tosNoDraw3:"Если вам сложно придумать идею или историю, я с удовольствием помогу.",tosNoDraw4:"Я также рад творческой свободе, но сначала мне понадобится больше узнать о вашем персонаже и его истории.",queueHeading:"Очередь и доступность",currentStatus:"Текущий статус",queueNote:"Актуальный порядок заказов и прогресс доступны на моей Trello-доске.",viewTrello:"Открыть Trello"
+        skipContent:"Перейти к содержимому",commissionMe:"Заказать",ageTitle:"Контент 18+",ageText:"На сайте могут находиться материалы для взрослых. Продолжая, вы подтверждаете, что имеете право просматривать такой контент в своей стране или регионе.",ageEnter:"Войти",ageLeave:"Выйти",navPrices:"Цены",navTos:"TOS",navQueue:"Очередь",heroKicker:"Комиссии",heroSub:"NSFW 2D художник и аниматор",heroNote:"Только furry. Прямо. Жестко. Без лишнего.",viewPrices:"Смотреть цены",viewQueue:"Смотреть очередь",warningBar:"18+ — на сайте могут находиться материалы для взрослых.",priceList:"Прайс-лист",sketch:"Ч/б скетч",flat:"Плоский цвет",render:"Фулл рендер",comic:"Комиксы",animation:"Анимация",extras:"Дополнительно",from:"от",customFrom:"индивидуально / от",extraAlt:"Альтернативная версия",extraChar:"Доп. персонаж",extraBg:"Фон",extraComplex:"Сложные детали",extraRush:"Срочный заказ",tosTitle:"Условия работы",tosShow:"Читать полностью",tosHide:"Скрыть текст",tosGeneral:"Общее",tosGeneral1:"Я рисую только антропоморфных персонажей.",tosGeneral2:"Необходимо предоставить референс персонажа. Если его нет, понадобится подробное текстовое описание внешности и готовая визуальная палитра цветов.",tosGeneral3:"Также можно предоставить фотографии и 3D-референсы, если они есть.",tosPayment:"Оплата",tosPayment1:"Оплата принимается через PayPal в USD.",tosPayment2:"Другие способы оплаты также можно обсудить отдельно, например если вы из СНГ или Китая.",tosPayment3:"Если вы заказываете работу вместе с другом, я принимаю оплату одним инвойсом, а не двумя отдельными.",tosPayment4:"Полная оплата требуется только после того, как скетч завершен и утвержден. Я не беру оплату до предоставления скетча и вашего подтверждения.",tosPayment5:"Для заказов от $200 доступна рассрочка на два или три платежа. Финальная работа передается после последнего платежа, но WIP будут предоставляться на протяжении процесса.",tosProcess:"Процесс",tosProcess1:"Помимо Trello, после утверждения скетча вы получите ссылку на Google Drive с отдельной папкой для WIP. Туда же будет загружен исходный файл финальной работы в максимально доступном качестве.",tosProcess2:"Это делается в любом случае, даже если обновления и финальную работу вы получаете через Telegram.",tosProcess3:"Обычно я показываю относительно мало WIP и в основном основные этапы: скетч, лайн и финальную работу. Если вы хотите получать обновления чаще и почти в реальном времени, просто скажите.",tosProcess4:"В стоимость входят 2–3 бесплатные правки. Дополнительные правки оплачиваются отдельно. Ошибки в персонаже или дизайне, допущенные мной, исправляются бесплатно даже после завершения работы.",tosProcess5:"Я не беру доплату за сложный дизайн персонажа вроде большого количества пятен или полос, потому что упрощаю такие детали, стараясь при этом сохранить их расположение достаточно точно.",tosDeadline:"Сроки",tosDeadline1:"Я не работаю с жесткими дедлайнами, если они не были согласованы заранее.",tosDeadline2:"Обычно комиссия занимает 1–2 месяца в зависимости от размера очереди. Если нужен более точный ориентир, это можно обсудить отдельно.",tosDeadline3:"Я распределяю работу с учетом сложности, текущей нагрузки и творческого ресурса, стараясь выдать максимально качественный результат.",tosRights:"Права",tosRights1:"Покупка комиссии не передает вам авторские права на работу.",tosRights2:"Вы можете публиковать работу, использовать ее как аватар и использовать лично, если не удаляете мою подпись с финального изображения. Обрезать подпись при использовании в качестве аватара можно.",tosRights3:"При публикации моей работы на сайтах необходимо указывать меня как художника.",tosRights4:"Нельзя размещать мою работу на платных площадках или использовать ее как платный контент, если коммерческое использование не было согласовано отдельно.",tosRights5:"Нельзя обучать локальные AI-модели на моих работах или использовать их для копирования моего стиля.",tosRights6:"Я могу использовать вашу комиссию для продвижения, если мы не договорились иначе. Можно заранее попросить анонимную публикацию или полную приватность. Доплаты за приватность нет.",tosRefunds:"Возвраты",tosRefunds1:"Возврат возможен, если я еще не начал работу или полностью не могу завершить заказ. Способ возврата обсуждается лично.",tosRefunds2:"После начала работы возвраты обычно недоступны. Если я не могу завершить заказ или существенного прогресса не было, возврат все еще может быть произведен.",tosNoDrawShort:"Не рисую",tosNoDraw:"Что я не рисую?",tosNoDraw1:"Подгузники, бодибилдеров и чрезмерную мускулатуру, гипертрофированные гениталии, очень полных персонажей или экстремальные пропорции тела, feral-персонажей, беременность, пони, лактацию, любые трансформации и кастрацию.",tosNoDraw2:"Кроме этого, жестких табу у меня нет.",tosNoDraw3:"Если вам сложно придумать идею или историю, я с удовольствием помогу.",tosNoDraw4:"Я также рад творческой свободе, но сначала мне понадобится больше узнать о вашем персонаже и его истории.",queueHeading:"Очередь и доступность",currentAvailability:"Текущая доступность",commissionQueue:"Очередь заказов",currentStatus:"Текущий статус",queueNote:"Актуальный порядок заказов и прогресс доступны на моей Trello-доске.",viewTrello:"Открыть Trello"
       }
     };
 
-    const ageGate=document.getElementById("ageGate"),ageEnter=document.getElementById("ageEnter"),langToggle=document.getElementById("langToggle"),tosFrame=document.getElementById("tosFrame"),tosToggle=document.getElementById("tosToggle"),tosHint=document.getElementById("tosHint"),queueStatus=document.getElementById("queueStatus"),siteNav=document.getElementById("siteNav"),menuBtn=document.getElementById("menuBtn"),navLinks=document.getElementById("navLinks"),socialDock=document.getElementById("socialDock"),screenScratches=document.getElementById("screenScratches"),liveRegion=document.getElementById("liveRegion");
+    const ageGate=document.getElementById("ageGate"),ageEnter=document.getElementById("ageEnter"),langToggle=document.getElementById("langToggle"),tosFrame=document.getElementById("tosFrame"),tosToggle=document.getElementById("tosToggle"),tosHint=document.getElementById("tosHint"),queueStatus=document.getElementById("queueStatus"),siteNav=document.getElementById("siteNav"),menuBtn=document.getElementById("menuBtn"),navLinks=document.getElementById("navLinks"),screenScratches=document.getElementById("screenScratches"),liveRegion=document.getElementById("liveRegion");
     const getLang=()=>localStorage.getItem(STORAGE.lang)||"en";
     function updateTosHint(){const lang=getLang();tosHint.textContent=i18n[lang][tosFrame.classList.contains("open")?"tosHide":"tosShow"]}
     function updateQueueStatus(){const lang=getLang();const status=(SITE_CONFIG.queueStatus||queueStatus.dataset.status||"open").toLowerCase();const isOpen=status!=="closed";queueStatus.classList.toggle("open",isOpen);queueStatus.classList.toggle("closed",!isOpen);queueStatus.textContent=isOpen?(lang==="ru"?"ОТКРЫТО":"OPEN"):(lang==="ru"?"ЗАКРЫТО":"CLOSED")}
@@ -280,15 +934,10 @@
     navLinks.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
     document.addEventListener("click",e=>{if(navLinks.classList.contains("open")&&!siteNav.contains(e.target))closeMenu()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&navLinks.classList.contains("open")){closeMenu();menuBtn.focus()}});
-    let lastY=window.scrollY,ticking=false;
+    let ticking=false;
     function scrollUI(){
-      const y=window.scrollY;
-      siteNav.classList.toggle("scrolled",y>18);
-      if(y>220&&y>lastY+5)socialDock.classList.add("auto-hidden");
-      else if(y<lastY-5||y<160)socialDock.classList.remove("auto-hidden");
-      const heroImg=document.querySelector(".hero-img");
-      if(heroImg&&y<900)heroImg.style.translate=`0 ${Math.min(y*.055,28)}px`;
-      lastY=y;ticking=false;
+      siteNav.classList.toggle("scrolled",window.scrollY>18);
+      ticking=false;
     }
     scrollUI();
     window.addEventListener("scroll",()=>{if(!ticking){requestAnimationFrame(scrollUI);ticking=true}},{passive:true});
@@ -297,7 +946,6 @@
     },{rootMargin:"-32% 0px -56% 0px",threshold:0});
     document.querySelectorAll('#prices,#tos,#queue').forEach(section=>navSectionObserver.observe(section));
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -8% 0px"});document.querySelectorAll(".reveal,.stagger").forEach(el=>observer.observe(el));
-    requestAnimationFrame(()=>setTimeout(()=>document.querySelector(".hero").classList.add("ready"),80));
     document.querySelectorAll("[data-link]").forEach(el=>{
       const url=SITE_CONFIG.links[el.dataset.link];
       if(url)el.href=url;
